@@ -12,7 +12,6 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 3. `cd T-Header/`
 4. `ls`
 5. `bash t-header.sh`
-6. after complete all process just execute `chsh -s zsh` and open new session...
-{ on my script " chsh -s zsh " command automatic not executable. so do it manually.. i m sorry about that }
+6. after complete all processing just --open new session--
 #
 video guide on YouTube channel { [Remo773 T-Bag](https://) }
