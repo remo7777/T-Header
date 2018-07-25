@@ -121,6 +121,7 @@ else
 wget https://raw.githubusercontent.com/remo7777/T-Header/master/.remo773.zsh-theme &> /dev/null
 sed -e "s/\Remo773/$PROC/g" .remo773.zsh-theme > $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
 fi
+sourse ~/.zshrc
 else
 	echo -e "\033[32mHope you like my work..\033[0m"
 fi
