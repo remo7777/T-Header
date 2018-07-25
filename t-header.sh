@@ -1,3 +1,225 @@
-z="
-";SJz='=0';DBz='....';hIz='ghli';XMz='au =';OJz='m )';UCz='lock';TDz='>> $';eGz='his ';NHz='E/.z';UHz='ad.t';RDz='773.';HJz='m PS';VNz='yx=1';HBz='[32m';rKz='ates';iDz='"\03';RFz='")\0';VKz='m/ro';fHz='them';YHz='.zsh';EJz='er';UGz='33m~';fDz='()';nJz='..\e';LBz='0m  ';HCz='binu';rz=' -ne';ZJz='elif';vDz='Head';BKz='sh.g';PLz='or='\''';mz='@]}"';FEz='$ok ';jIz='(\e[';nKz='%S)"';CHz='r/;';kHz='v-pl';xJz='gec/';Kz='inne';Mz=''\''█■■';xMz='u=1';CEz='only';BLz='HEME';eLz=' rm ';cFz='43;3';ez='p $p';lGz=' "y"';az='prin';yLz='rs.s';gEz='cter';iKz='.$(d';FMz=' no.';eMz='gest';CNz='gain';DJz='4. T';pJz='t cl';tHz='-the';aHz='rm t';uJz='ub.c';PEz='nter';EHz='-hea';Bz=' () ';dDz='THEA';bCz='glet';mMz='hrc;';lCz='font';hKz='.bak';xLz='colo';GNz='ghte';gCz=' \03';pKz='sh/t';KMz='n..\';kDz=';32m';lDz='773 ';sDz='...T';XBz=' cno';ULz='.sh'\''';CDz='om/r';LFz='m$(f';vLz='.ter';BEz='ers ';SLz='x/co';UIz='---*';OFz=' Rem';MBz=' ";';ZCz='shar';fFz='BSCR';fEz='hara';mEz='mPlz';vJz='om/C';QFz='NAME';XEz='PROC';TGz='├─[\';BBz='ase ';ODz='p 3';oIz='32m)';iHz='-chi';KCz='euti';CGz='te +';pGz='er.t';tBz='te -';Vz='e [ ';xHz='h/th';OLz='hcol';PIz=' Hea';aEz=']; t';iLz='wake';SMz='u=0';CKz='it "';ONz='ng/z';NBz='slee';qFz='C\e[';wIz='\e[3';qKz='empl';yHz='emes';gJz='h...';LDz='> /d';hFz='MY Y';tCz=' htt';jBz='m[*]';qJz='one ';FNz='syx ';kFz='HANN';nLz='& sp';eHz='zsh/';PJz='OC33';NMz='stio';ZGz=' you';TMz='cust';jDz='3[01';GLz='H_TH';sBz='upda';oGz='head';oDz='menu';MMz='sh-a';dCz='o773';aFz=''\''\03';yIz='ugin';xIz='3mpl';mGz='$HOM';PKz='it c';oJz='( gi';TIz='m';Az='spin';dJz='32mY';Ez='l pi';WGz='35m$';HNz='r se';JIz='ke m';bIz='h-my';DGz=''\''%d ';vBz=' /de';AEz='h us';RJz='ozsh';TEz='OC';SBz='";';xFz='-\e[';NKz='" "$';CMz='ownl';Oz=''\''■█■';uFz='ux\e';WBz='b"';PCz='term';QDz='Remo';cCz='/Rem';tFz='[36m';kKz='%m.%';AMz='h ];';OGz='+'\''%l';KDz='lf &';nGz='E/t-';dEz=' lon';CFz='r';bJz='d $H';uKz='ate"';tDz='ermi';DLz='zshr';JLz='"'\'' "';HGz='34m]';ABz='.ple';FBz='33m[';VMz='ns/';XKz='usse';IJz='1 pr';SEz='" PR';EMz='fail';sKz='/zsh';wz='Down';Cz='{';qIz='sh-c';IGz='\e[0';LJz='mBes';nBz='ll p';iFz='OUTU';QBz='tf "';wJz='abba';eKz='pth ';DMz='oad ';REz='e : ';Tz=')';nz='tput';gLz=';ter';QNz='synt';mFz='## \';KGz='4m[\';WCz='if [';aGz=' wan';qDz='----';uz='4m\r';sLz=' ];';Nz='■■'\'' ';BIz='ng-c';EKz='rmux';gIz='x-hi';aJz=' [ -';pz='is';TLz='lors';OKz='"; g';ELz='c"; ';uEz='s Na';nDz='8)';CLz='"$HO';rFz='1;33';kGz='2" =';gKz='v "$';ZKz=' "$H';qCz='p 4';dLz='onts';OCz='zsh ';DKz='E/te';pCz='0m";';ZMz='om/z';KEz='af 3';lLz=' ) &';fJz='vnt ';CCz='et p';RMz='zsha';ZDz='flf';RCz='pi -';HMz=' ll ';EFz='2mPl';MKz='/.te';DEz='[0m"';wDz='er..';HDz='mast';SCz='ux-w';Gz='l de';dBz='e[0m';KLz='"; e';DDz='emo7';dIz='2. Z';wKz=' sed';KFz='E="$';YMz=' 0 ]';QHz=''\''$PR';mBz='nsta';HIz='e yo';cJz='h';cGz=' ste';AKz='hmyz';PMz='s se';IKz='dept';JFz='TNAM';SFz='m";';RHz='OC'\''"';HEz='];';VJz='rm -';LGz='e[33';hz='do';JDz='73.f';OEz='as e';VGz='└─[\';ILz='"xio';tJz='gith';qz='echo';fKz='1; m';YGz=' "Do';MJz='t on';FDz='REMO';UJz='E/.o';oHz='-e "';lz='ner[';VLz='" >>';VEz=' 0';rHz='/g" ';hEz='s Yo';Jz='l sp';fIz='ynta';BDz='nt.c';XLz='o "a';UNz='ing ';PDz='cat ';EIz='plus';GFz=' 9 c';gFz='IBE ';UBz='   \';kBz=' \e[';oKz='; cp';qHz='73/$';OMz='n pl';VFz='m+-+';QGz='%p'\'')';nMz='in';AGz='[33m';QIz='der"';NNz='ghti';vCz='/raw';UMz='om/p';iIz='ght ';HFz='s...';PBz='elay';gGz='/n) ';iJz='h = ';sHz='.rem';eEz='g  c';GEz='= 0 ';hJz='$ozs';ICz='tils';qGz='xt ]';DNz='zshs';wHz='ME/.';SDz='flf ';tMz='auto';GIz='mHop';kEz='nput';mJz='up..';CIz='hiam';nCz='pres';NIz='3[31';WDz='hare';XCz='$PRE';Dz='loca';LNz='ligh';yJz='ux-o';THz='t-he';yCz='serc';kJz='32mO';lIz='lugi';aLz='ont=';bBz=' [Do';Sz='■█'\'' ';JMz='agai';tGz='rm $';KIz='y wo';sEz='m9 \';AFz='-qL ';OIz=' "T-';XGz=']\e[';wEz='33[0';PHz=' "TN';mIz='ns\e';WEz=' ${#';NCz='git ';lEz='0m"';YLz='lias';XIz='m12.';pIz='3. Z';Iz='0.25';FGz='b'\'')\';WHz='> $H';GMz='2..i';MHz='/d'\'' ';XFz='-+\e';cEz='mToo';rCz='else';WLz=' ech';lBz='32mi';wGz='eade';ZHz='rc';qMz='plug';qLz=' -s ';rDz='*/';bFz='3[1;';aMz='sh-u';dGz='up t';Rz='█■'\'' ';oLz='in;';bz='t $1';Hz='lay=';pLz='chsh';BFz='10;';sz=' "\0';XHz='OME/';nHz='heme';cKz='sh" ';oBz='acka';KHz='/^TN';nIz='[01;';wFz='4m]\';rEz='3[33';dHz='-my-';xEz='m" |';JNz='tax-';vFz='[1;3';jFz='BE C';RGz=';34m';DFz='m \0';fz='id)"';MGz='m$(d';BJz='01;3';uDz='nal-';lKz='d-%H';FLz='1iZS';IEz=' ""';jLz='-unl';mCz=' is ';sJz='s://';INz='-syn';aKz='.oh-';EEz='ok=0';hCz='3[32';uMz='sugg';DIz='iov-';RIz=')\e[';XJz='/.zs';MFz='igle';VDz='IX/s';OHz='shrc';IMz='try ';rBz='apt ';JJz='ompt';pMz='tom/';wBz='v/nu';lJz=' new';RLz='ermu';pBz='ges.';LMz='32mZ';TKz='ithu';HHz='ll ;';dMz='osug';BHz='/T-H';jGz='ROC3';JHz='-i '\''';UKz='b.co';dFz='0m##';UEz=' sgr';iGz=' "$P';wCz='.git';gz=' ]; ';FHz='d.tx';CJz='2m)';ZIz='18\e';mDz='(201';rLz='zsh;';yMz='..i ';MLz='"ali';YBz='rm';jMz='ce ~';uCz='ps:/';tIz='utos';ENz='yx=0';KNz='high';IHz='sed ';xz='load';yDz='y-zs';bGz='t to';uIz='ugge';GDz='773/';JBz='3m]\';xCz='hubu';xGz='r.tx';cLz='ux/f';BGz='$(da';pFz='$PRO';YCz='FIX/';aCz='e/fi';NGz='ate ';vHz=' $HO';bHz='t';MIz='exit';jEz='ve i';Wz='"$(p';VCz=';';sCz='wget';LIz='rk..';aDz='rm R';TJz=' -d ';Fz='d=$!';yz='ing.';OBz='p $d';TFz=''\''\e[';NEz='"Ple';fCz='then';UFz='0;35';WFz='-+-+';pDz='+---';PGz=':%M ';uBz='y &>';QKz='lone';CBz='wait';BNz='ry a';lHz='us.z';kCz='let ';ECz='urse';tLz='=1';SNz='ighl';HKz='" --';QCz='ux-a';LHz='AME=';dKz='--de';Qz=''\''■■■';sGz='en';NJz='e\e[';jKz='+%Y.';YIz='7.20';dz=' gre';ALz='SH_T';LEz='read';YDz='let/';GKz='yzsh';yBz='inst';vz='[*] ';BCz='figl';kLz='ock;';Lz='r=( ';EDz='777/';vEz='me\0';ZEz='t 8 ';EGz='%a.%';gHz='es/x';IBz='$i\0';YFz='[00m';bMz='sers';wLz='mux/';XDz='/fig';xBz='ll;';xKz=' -i ';aBz=';33m';JKz='h 1;';ACz='all ';mKz=':%M:';qBz='...\';YKz='ll/o';yFz='m[\e';LCz='ls w';sFz='m@\e';MNz='ting';mHz='sh-t';hGz='OC32';DHz='er/t';JEz=' set';tz='33[3';rGz='; th';vIz='st (';AIz='/xio';AHz='cd $';VIz='/';AJz='s\e[';GJz='usto';jz='i in';oCz='ent\';RBz='\b\b';oz=' civ';PFz=' "$T';EBz='.\e[';WKz='bbyr';eJz='ou h';iMz='sour';gMz='; ec';TCz='ake-';uLz='e $H';GBz='\033';JCz=' cor';IFz='ok=1';BMz='32md';nEz=' ent';tEz='32mc';VBz='b\b\';IIz='u li';FCz='s-ut';bKz='my-z';cIz='-zsh';ANz='ll t';cHz='/.oh';KKz=' cp ';VHz='xt >';FKz='-ohm';fLz='-rf ';hHz='iong';cBz='ne]\';NLz='as c';rMz='ins/';QJz='3" =';wMz='ons ';PNz='ng.z';qEz='than';bEz='hen';ADz='onte';Yz='| aw';HLz='EME=';hBz='"\e[';JGz='m-\e';WNz='DER';iBz='1;34';WIz=': (\';tKz='rc.z';gBz=' -e ';SGz=']';KJz=' ( \';iCz='mRem';fBz='}';SIz='1;32';NFz='t -f';FFz='ease';RNz='ax-h';FJz='5. C';YEz='} -g';gDz='clea';FIz='me';uGz='HOME';eCz='.flf';QMz='tup.';hDz='r;';vGz='/t-h';kIz='33mp';iEz='u ha';jJz='0 ];';GGz='e[1;';eBz=' "";';eFz='# SU';NDz='ull;';MEz=' -p ';LKz='-R "';cz='}'\'' |';hLz='mux-';Xz='s a ';lFz='EL #';rJz='http';sMz='zsh-';SKz='://g';sIz='nd-a';eDz='DER ';oEz='er l';uHz='me >';Pz=''\''■■█';GHz='t &>';cMz='-aut';UDz='PREF';IDz='er/R';TNz='ight';jHz='amio';Uz='whil';aIz='1. O';yGz='t;';lMz='ns.z';GCz='ils ';ZBz='\e[1';cDz='fi';pEz='ess ';fMz='ions';QLz='E/.t';LLz='cho ';mLz='ull ';eIz='sh-s';Zz='k '\''{';WMz='$zsh';MDz='ev/n';kz=' "${';fGz='? (y';pHz='s/\R';nFz='0m'\'';';yEz=' pv ';oFz='m┌─[';ZLz=' chf';MCz='get ';xDz='oh-m';ZFz=''\'';';YJz='hrc';jCz=' fig';WJz='rf $';TBz='done';bLz=''\''$HO';vMz='esti';oMz='/cus';vKz='rc";';KBz='033[';yKz=''\''/^Z';hMz='ho "';iz='for ';kMz='ns/z';DCz='v nc';SHz=' >> ';RKz=' git';bDz='if';rIz='omma';QEz=' Nam';
-eval "$Az$Bz$Cz$z$Dz$Ez$Fz$z$Dz$Gz$Hz$Iz$z$Dz$Jz$Kz$Lz$Mz$Nz$Oz$Nz$Pz$Nz$Qz$Rz$Qz$Sz$Tz$z$Uz$Vz$Wz$Xz$Yz$Zz$az$bz$cz$dz$ez$fz$gz$hz$z$iz$jz$kz$Az$lz$mz$z$hz$z$nz$oz$pz$z$qz$rz$sz$tz$uz$vz$wz$xz$yz$ABz$BBz$CBz$DBz$DBz$EBz$FBz$GBz$HBz$IBz$tz$JBz$KBz$LBz$MBz$z$NBz$OBz$PBz$z$az$QBz$RBz$RBz$RBz$RBz$SBz$z$TBz$z$TBz$z$az$QBz$UBz$VBz$VBz$WBz$z$nz$XBz$YBz$z$az$QBz$ZBz$aBz$bBz$cBz$dBz$SBz$z$qz$eBz$z$fBz$z$qz$eBz$z$qz$gBz$hBz$iBz$jBz$kBz$lBz$mBz$nBz$oBz$pBz$qBz$dBz$SBz$z$qz$eBz$z$rBz$sBz$tBz$uBz$vBz$wBz$xBz$z$rBz$yBz$ACz$BCz$CCz$DCz$ECz$FCz$GCz$HCz$ICz$JCz$KCz$LCz$MCz$NCz$OCz$PCz$QCz$RCz$uBz$vBz$wBz$xBz$z$PCz$SCz$TCz$UCz$VCz$z$WCz$gBz$XCz$YCz$ZCz$aCz$bCz$cCz$dCz$eCz$gz$fCz$z$qz$gBz$hBz$iBz$jBz$gCz$hCz$iCz$dCz$eCz$jCz$kCz$lCz$mCz$nCz$oCz$KBz$pCz$z$NBz$qCz$z$rCz$z$sCz$tCz$uCz$vCz$wCz$xCz$yCz$ADz$BDz$CDz$DDz$EDz$FDz$GDz$HDz$IDz$DDz$JDz$KDz$LDz$MDz$NDz$z$NBz$ODz$z$PDz$QDz$RDz$SDz$TDz$UDz$VDz$WDz$XDz$YDz$QDz$RDz$ZDz$z$NBz$ODz$z$aDz$DDz$JDz$bDz$z$cDz$z$dDz$eDz$fDz$z$Cz$z$gDz$hDz$z$qz$gBz$iDz$jDz$kDz$z$QDz$lDz$mDz$nDz$z$oDz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$rDz$z$DBz$sDz$tDz$uDz$vDz$wDz$DBz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$rDz$z$xDz$yDz$AEz$BEz$CEz$DBz$z$GBz$DEz$VCz$z$EEz$z$Uz$Vz$FEz$GEz$HEz$z$hz$z$qz$IEz$z$nz$JEz$KEz$z$LEz$MEz$NEz$OEz$PEz$QEz$REz$SEz$TEz$z$nz$UEz$VEz$z$WCz$WEz$XEz$YEz$ZEz$aEz$bEz$z$qz$gBz$hBz$iBz$jBz$gCz$hCz$cEz$dEz$eEz$fEz$gEz$hEz$iEz$jEz$kEz$qBz$KBz$lEz$z$qz$IEz$z$qz$gBz$iDz$hCz$mEz$nEz$oEz$pEz$qEz$gCz$rEz$sEz$KBz$tEz$fEz$gEz$uEz$vEz$wEz$xEz$yEz$AFz$BFz$z$qz$IEz$z$NBz$qCz$z$gDz$CFz$z$qz$gBz$iDz$jDz$kDz$z$QDz$lDz$mDz$nDz$z$oDz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$rDz$z$DBz$sDz$tDz$uDz$vDz$wDz$DBz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$rDz$z$xDz$yDz$AEz$BEz$CEz$DBz$z$GBz$DEz$VCz$z$qz$IEz$z$qz$gBz$hBz$iBz$DFz$tz$EFz$FFz$nEz$oEz$pEz$qEz$GFz$fEz$gEz$HFz$GBz$DEz$z$qz$IEz$z$rCz$z$IFz$z$cDz$z$TBz$z$gDz$CFz$z$JFz$KFz$XEz$SBz$z$qz$gBz$iDz$hCz$LFz$MFz$NFz$OFz$dCz$eCz$PFz$QFz$RFz$wEz$SFz$z$qz$eBz$z$qz$gBz$TFz$UFz$VFz$WFz$WFz$WFz$WFz$WFz$WFz$WFz$WFz$XFz$YFz$ZFz$z$qz$gBz$aFz$bFz$cFz$dFz$eFz$fFz$gFz$hFz$iFz$jFz$kFz$lFz$mFz$KBz$nFz$z$qz$gBz$TFz$UFz$VFz$WFz$WFz$WFz$WFz$WFz$WFz$WFz$WFz$XFz$YFz$ZFz$z$qz$eBz$z$qz$gBz$hBz$iBz$oFz$ZBz$kDz$pFz$qFz$rFz$sFz$tFz$PCz$uFz$vFz$wFz$dBz$xFz$iBz$yFz$AGz$BGz$CGz$DGz$EGz$FGz$GGz$HGz$IGz$JGz$vFz$KGz$LGz$MGz$NGz$OGz$PGz$QGz$ZBz$RGz$SGz$z$ZBz$RGz$TGz$GGz$UGz$ZBz$RGz$SGz$z$VGz$GGz$WGz$ZBz$RGz$XGz$lEz$z$nz$JEz$KEz$z$LEz$MEz$YGz$ZGz$aGz$bGz$cGz$dGz$eGz$fGz$gGz$SEz$hGz$z$nz$UEz$VEz$z$WCz$iGz$jGz$kGz$lGz$gz$fCz$z$WCz$gBz$mGz$nGz$oGz$pGz$qGz$rGz$sGz$z$tGz$uGz$vGz$wGz$xGz$yGz$z$cDz$z$AHz$uGz$BHz$wGz$CHz$z$sCz$tCz$uCz$vCz$wCz$xCz$yCz$ADz$BDz$CDz$DDz$EDz$FDz$GDz$HDz$DHz$EHz$FHz$GHz$vBz$wBz$HHz$z$NBz$ODz$z$IHz$JHz$KHz$LHz$MHz$mGz$NHz$OHz$z$qz$PHz$LHz$QHz$RHz$SHz$mGz$NHz$OHz$z$PDz$THz$UHz$VHz$WHz$XHz$YHz$ZHz$z$NBz$ODz$z$aHz$EHz$FHz$bHz$z$tGz$uGz$cHz$dHz$eHz$fHz$gHz$hHz$iHz$jHz$kHz$lHz$mHz$nHz$z$IHz$oHz$pHz$DDz$qHz$XEz$rHz$sHz$dCz$YHz$tHz$uHz$vHz$wHz$xDz$yDz$xHz$yHz$AIz$BIz$CIz$DIz$EIz$YHz$tHz$FIz$z$rCz$z$qz$gBz$iDz$hCz$GIz$HIz$IIz$JIz$KIz$LIz$GBz$DEz$z$cDz$z$MIz$z$fBz$z$gDz$hDz$z$qz$gBz$iDz$NIz$LFz$MFz$NFz$OFz$dCz$OIz$PIz$QIz$RIz$lEz$z$qz$gBz$hBz$SIz$TIz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$qDz$UIz$VIz$z$QDz$lDz$WIz$LGz$XIz$YIz$ZIz$HBz$Tz$z$aIz$bIz$cIz$z$dIz$eIz$fIz$gIz$hIz$iIz$jIz$kIz$lIz$mIz$nIz$oIz$z$pIz$qIz$rIz$sIz$tIz$uIz$vIz$wIz$xIz$yIz$AJz$BJz$CJz$z$DJz$tDz$uDz$vDz$EJz$z$FJz$GJz$HJz$IJz$JJz$KJz$LGz$LJz$MJz$NJz$SIz$OJz$z$pDz$qDz$qDz$qDz$qDz$qDz$qDz$qDz$UIz$VIz$z$GBz$DEz$VCz$z$nz$JEz$KEz$VCz$z$LEz$MEz$YGz$ZGz$aGz$bGz$cGz$dGz$eGz$fGz$gGz$SEz$PJz$z$nz$UEz$VEz$z$WCz$iGz$jGz$QJz$lGz$gz$fCz$z$RJz$SJz$z$WCz$TJz$mGz$UJz$bIz$cIz$gz$fCz$z$VJz$WJz$uGz$cHz$dHz$eHz$z$tGz$uGz$XJz$YJz$z$ZJz$aJz$bJz$XHz$YHz$gz$fCz$z$VJz$WJz$uGz$XJz$cJz$z$rCz$z$qz$gBz$hBz$iBz$jBz$kBz$dJz$eJz$fJz$xDz$yDz$gJz$IGz$SFz$z$cDz$z$Uz$Vz$hJz$iJz$jJz$z$hz$z$qz$gBz$hBz$iBz$jBz$kBz$kJz$bIz$cIz$lJz$JEz$mJz$nJz$DEz$VCz$z$qz$eBz$z$oJz$pJz$qJz$rJz$sJz$tJz$uJz$vJz$wJz$xJz$PCz$yJz$AKz$BKz$CKz$mGz$DKz$EKz$FKz$GKz$HKz$IKz$JKz$KKz$LKz$mGz$DKz$EKz$FKz$GKz$MKz$EKz$NKz$uGz$MKz$EKz$OKz$PKz$QKz$RKz$SKz$TKz$UKz$VKz$WKz$XKz$YKz$bIz$cIz$wCz$ZKz$XHz$aKz$bKz$cKz$dKz$eKz$fKz$gKz$uGz$MKz$EKz$NKz$uGz$MKz$EKz$hKz$iKz$NGz$jKz$kKz$lKz$mKz$nKz$oKz$ZKz$XHz$aKz$bKz$pKz$qKz$rKz$sKz$tKz$mHz$qKz$uKz$ZKz$XHz$YHz$vKz$wKz$xKz$yKz$ALz$BLz$MHz$CLz$wHz$DLz$ELz$IHz$JHz$FLz$GLz$HLz$ILz$BIz$CIz$DIz$EIz$JLz$mGz$NHz$OHz$KLz$LLz$MLz$NLz$OLz$PLz$mGz$QLz$RLz$SLz$TLz$ULz$VLz$ZKz$XHz$YHz$vKz$WLz$XLz$YLz$ZLz$aLz$bLz$wHz$PCz$cLz$dLz$ULz$VLz$ZKz$XHz$YHz$vKz$eLz$fLz$mGz$DKz$EKz$FKz$GKz$gLz$hLz$iLz$jLz$kLz$lLz$LDz$MDz$mLz$nLz$oLz$z$pLz$qLz$rLz$z$WCz$TJz$mGz$UJz$bIz$cIz$sLz$z$fCz$z$RJz$tLz$z$ZJz$aJz$uLz$XHz$vLz$wLz$xLz$yLz$AMz$z$fCz$z$RJz$tLz$z$rCz$z$qz$gBz$hBz$iBz$jBz$kBz$BMz$CMz$DMz$EMz$FMz$GMz$HMz$IMz$JMz$KMz$dBz$SBz$z$cDz$z$TBz$z$qz$gBz$hBz$iBz$jBz$kBz$LMz$MMz$tIz$uIz$NMz$OMz$yIz$PMz$QMz$EBz$pCz$z$RMz$SMz$z$AHz$uGz$cHz$dHz$eHz$TMz$UMz$lIz$VMz$z$Uz$Vz$WMz$XMz$YMz$VCz$z$hz$z$oJz$pJz$qJz$rJz$sJz$tJz$uJz$ZMz$aMz$bMz$sKz$cMz$dMz$eMz$fMz$wCz$gMz$hMz$iMz$jMz$cHz$dHz$eHz$TMz$UMz$lIz$kMz$MMz$tIz$uIz$NMz$kMz$MMz$tIz$uIz$NMz$lMz$cKz$TDz$uGz$XJz$mMz$lLz$LDz$MDz$mLz$nLz$nMz$z$WCz$TJz$mGz$UJz$bIz$cIz$oMz$pMz$qMz$rMz$sMz$tMz$uMz$vMz$wMz$HEz$z$fCz$z$RMz$xMz$z$rCz$z$qz$gBz$hBz$iBz$jBz$kBz$BMz$CMz$DMz$EMz$yMz$ANz$BNz$CNz$nJz$DEz$VCz$z$cDz$z$TBz$z$DNz$ENz$z$AHz$uGz$cHz$dHz$eHz$TMz$UMz$lIz$VMz$z$Uz$Vz$WMz$FNz$GEz$HEz$z$hz$z$qz$gBz$hBz$iBz$jBz$kBz$LMz$eIz$fIz$gIz$hIz$GNz$HNz$QMz$qBz$dBz$SBz$z$oJz$pJz$qJz$rJz$sJz$tJz$uJz$ZMz$aMz$bMz$sKz$INz$JNz$KNz$LNz$MNz$wCz$gMz$hMz$iMz$jMz$cHz$dHz$eHz$TMz$UMz$lIz$kMz$eIz$fIz$gIz$hIz$NNz$ONz$eIz$fIz$gIz$hIz$NNz$PNz$cKz$TDz$uGz$XJz$mMz$lLz$LDz$MDz$mLz$nLz$nMz$z$WCz$TJz$mGz$UJz$bIz$cIz$oMz$pMz$qMz$rMz$sMz$QNz$RNz$SNz$TNz$UNz$HEz$z$fCz$z$DNz$VNz$z$rCz$z$qz$gBz$hBz$iBz$jBz$kBz$BMz$CMz$DMz$EMz$yMz$ANz$BNz$CNz$nJz$DEz$VCz$z$cDz$z$TBz$z$dDz$WNz$z$rCz$z$qz$gBz$hBz$iBz$jBz$gCz$hCz$GIz$HIz$IIz$JIz$KIz$LIz$GBz$DEz$z$MIz$z$cDz$z$MIz$VEz"
+#!/bin/bash
+
+spin () {
+
+local pid=$!
+local delay=0.25
+local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+
+while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+
+for i in "${spinner[@]}"
+do
+	tput civis
+	echo -ne "\033[34m\r[*] Downloading..please wait.........\e[33m[\033[32m$i\033[33m]\033[0m   ";
+	sleep $delay
+	printf "\b\b\b\b\b\b\b\b";
+done
+done
+printf "   \b\b\b\b\b"
+tput cnorm
+printf "\e[1;33m [Done]\e[0m";
+echo "";
+
+}
+
+
+# note this is only print 7 charecters
+echo "";
+echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
+echo "";
+apt update -y &> /dev/null;
+apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api -y &> /dev/null;
+termux-wake-lock;
+if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
+	echo -e "\e[1;34m[*] \033[32mRemo773.flf figlet font is present\033[0m";
+	sleep 4
+else
+wget https://raw.githubusercontent.com/remo7777/REMO773/master/Remo773.flf &> /dev/null;
+sleep 3
+cat Remo773.flf >> $PREFIX/share/figlet/Remo773.flf
+sleep 3
+rm Remo773.fif
+fi
+THEADER () 
+{
+clear;
+echo -e "\033[01;32m
+Remo773 (2018)
+		
+	menu
++---------------------------*/
+.......Terminal-Header......
++---------------------------*/
+oh-my-zsh users only....
+\033[0m";
+ok=0
+while [ $ok = 0 ];
+do
+	echo ""
+tput setaf 3
+read -p "Pleas enter Name : " PROC
+tput sgr 0
+if [ ${#PROC} -gt 8 ]; then
+	echo -e "\e[1;34m[*] \033[32mToo long  characters You have input...\033[0m"
+	echo ""
+	echo -e "\033[32mPlz enter less than \033[33m9 \033[32mcharacters Name\033[0m" | pv -qL 10;
+	echo ""
+	sleep 4
+	clear
+echo -e "\033[01;32m
+Remo773 (2018)
+
+	menu
++---------------------------*/
+.......Terminal-Header......
++---------------------------*/
+oh-my-zsh users only....
+\033[0m";
+	echo ""
+	echo -e "\e[1;34m \033[32mPlease enter less than 9 characters...\033[0m"
+	echo ""
+else
+	ok=1
+fi
+done
+clear
+TNAME="$PROC";
+echo -e "\033[32m$(figlet -f Remo773.flf "$TNAME")\033[0m";
+echo "";
+echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
+echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+echo "";
+echo -e "\e[1;34m┌─[\e[1;32m$PROC\e[1;33m@\e[36mtermux\e[1;34m]\e[0m-\e[1;34m[\e[33m$(date +'%d %a.%b')\e[1;34m]\e[0m-\e[1;34m[\e[33m$(date +'%l:%M %p')\e[1;34m]
+\e[1;34m├─[\e[1;33m~\e[1;34m]
+└─[\e[1;35m$\e[1;34m]\e[0m"
+tput setaf 3
+read -p  "Do you want to steup this ? (y/n) " PROC32
+tput sgr 0
+if [ "$PROC32" = "y" ]; then
+	if [ -e $HOME/t-header.txt ]; then
+		rm $HOME/t-header.txt;
+fi
+
+	if [ -d $HOME/T-Header ]; then
+	cd $HOME/T-Header
+	fi
+	
+	wget https://raw.githubusercontent.com/remo7777/REMO773/master/t-head.txt &> /dev/null ;
+
+	sleep 3
+	sed -i '/^TNAME=/d' $HOME/.zshrc
+	echo "TNAME='$PROC'" >> $HOME/.zshrc
+	cat t-head.txt >> $HOME/.zshrc
+	sleep 3
+	rm t-head.txt
+	rm $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
+	if [ -e $PWD/.remo773.zsh-theme ]; then
+	sed -e "s/\Remo773/$PROC/g" .remo773.zsh-theme > $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
+else
+wget https://raw.githubusercontent.com/remo7777/T-Header/master/.remo773.zsh-theme &> /dev/null
+sed -e "s/\Remo773/$PROC/g" .remo773.zsh-theme > $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
+fi
+else
+	echo -e "\033[32mHope you like my work..\033[0m"
+fi
+exit
+}
+
+clear;
+echo -e "\033[31m$(figlet -f Remo773 "T- Header")\e[0m"
+echo -e "\e[1;32m
++----------------------------------*/
+Remo773 : (\e[33m12.7.2018\e[32m)
+
+1. Oh-my-zsh
+2. Zsh-syntax-highlight (\e[33mplugins\e[01;32m)
+3. Zsh-command-autosuggest (\e[33mplugins\e[01;32m)
+4. Terminal-Header
+5. Custom PS1 prompt ( \e[33mBest one\e[1;32m )
++----------------------------------*/
+\033[0m";
+tput setaf 3;
+read -p  "Do you want to steup this ? (y/n) " PROC33
+
+tput sgr 0
+if [ "$PROC33" = "y" ]; then
+
+
+ozsh=0
+if [ -d $HOME/.oh-my-zsh ]; then
+	rm -rf $HOME/.oh-my-zsh/
+	rm $HOME/.zshrc
+elif [ -d $HOME/.zsh ]; then
+	rm -rf $HOME/.zsh
+else
+	echo -e "\e[1;34m[*] \e[32mYou hvnt oh-my-zsh...\e[0m";
+fi
+while [ $ozsh = 0 ];
+do
+	echo -e "\e[1;34m[*] \e[32mOh-my-zsh new setup....\e[0m";
+	echo "";
+
+	( git clone https://github.com/Cabbagec/termux-ohmyzsh.git "$HOME/termux-ohmyzsh" --depth 1; cp -R "$HOME/termux-ohmyzsh/.termux" "$HOME/.termux"; git clone git://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh" --depth 1; mv "$HOME/.termux" "$HOME/.termux.bak.$(date +%Y.%m.%d-%H:%M:%S)"; cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"; sed -i '/^ZSH_THEME/d' "$HOME/.zshrc"; sed -i '1iZSH_THEME="xiong-chiamiov-plus"' "$HOME/.zshrc"; echo "alias chcolor='$HOME/.termux/colors.sh'" >> "$HOME/.zshrc"; echo "alias chfont='$HOME/.termux/fonts.sh'" >> "$HOME/.zshrc"; rm -rf $HOME/termux-ohmyzsh; termux-wake-unlock; ) &> /dev/null & spin;
+	chsh -s zsh;
+if [ -d $HOME/.oh-my-zsh ];
+then
+	ozsh=1
+
+elif [ -e $HOME/.termux/colors.sh ];
+then
+	ozsh=1
+else
+	echo -e "\e[1;34m[*] \e[32mdownload fail no.2..i ll try again..\e[0m";
+
+fi
+done
+
+echo -e "\e[1;34m[*] \e[32mZsh-autosuggestion plugins setup..\e[0m";
+
+zshau=0
+
+cd $HOME/.oh-my-zsh/custom/plugins/
+
+while [ $zshau = 0 ];
+do
+	( git clone https://github.com/zsh-users/zsh-autosuggestions.git; echo "source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+	if [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ];
+then
+	zshau=1
+else
+
+echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
+
+fi
+done
+zshsyx=0
+
+cd $HOME/.oh-my-zsh/custom/plugins/
+
+while [ $zshsyx = 0 ];
+do
+echo -e "\e[1;34m[*] \e[32mZsh-syntax-highlighter setup....\e[0m";
+	( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git; echo "source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+
+if [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ];
+then
+	zshsyx=1
+else
+	echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
+
+fi
+done
+
+
+
+
+	THEADER
+	
+	
+else
+	echo -e "\e[1;34m[*] \033[32mHope you like my work..\033[0m"
+	exit
+fi
+exit 0
