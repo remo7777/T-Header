@@ -95,7 +95,7 @@ echo -e "\e[1;34m┌─[\e[1;32m$PROC\e[1;33m@\e[36mtermux\e[1;34m]\e[0m-\e[1;34
 \e[1;34m├─[\e[1;33m~\e[1;34m]
 └─[\e[1;35m$\e[1;34m]\e[0m"
 tput setaf 3
-read -p  "Do you want to steup this ? (y/n) " PROC32
+read -p  "Do you want to setup this ? (y/n) " PROC32
 tput sgr 0
 if [ "$PROC32" = "y" ]; then
 	if [ -e $HOME/t-header.txt ]; then
@@ -142,7 +142,7 @@ Remo773 : (\e[33m12.7.2018\e[32m)
 +----------------------------------*/
 \033[0m";
 tput setaf 3;
-read -p  "Do you want to steup this ? (y/n) " PROC33
+read -p  "Do you want to setup this ? (y/n) " PROC33
 
 tput sgr 0
 if [ "$PROC33" = "y" ]; then
