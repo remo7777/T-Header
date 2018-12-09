@@ -180,13 +180,13 @@ done
 echo -e "\e[1;34m[*] \e[32mZsh-autosuggestion plugins setup..\e[0m";
 
 zshau=0
-
-cd $HOME/.oh-my-zsh/custom/plugins/
+mkdir -p $HOME/.plugins/
+cd $HOME/.plugins/
 
 while [ $zshau = 0 ];
 do
-	( git clone https://github.com/zsh-users/zsh-autosuggestions.git; echo "source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
-	if [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ];
+	( git clone https://github.com/zsh-users/zsh-autosuggestions.git; echo "source ~/.plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+	if [ -d $HOME/.plugins/zsh-autosuggestions ];
 then
 	zshau=1
 else
@@ -197,14 +197,14 @@ fi
 done
 zshsyx=0
 
-cd $HOME/.oh-my-zsh/custom/plugins/
+cd $HOME/.plugins/
 
 while [ $zshsyx = 0 ];
 do
 echo -e "\e[1;34m[*] \e[32mZsh-syntax-highlighter setup....\e[0m";
-	( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git; echo "source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+	( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git; echo "source ~/.plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
 
-if [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ];
+if [ -d $HOME/.plugins/zsh-syntax-highlighting ];
 then
 	zshsyx=1
 else
