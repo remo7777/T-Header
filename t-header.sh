@@ -22,14 +22,35 @@ printf "\e[1;33m [Done]\e[0m";
 echo "";
 
 }
+COPY_FILES() {
+	version=`getprop ro.build.version.release | sed -e 's/\.//g' | cut -c1`
+        #rm -rf ~/.draw ~/.bashrc ~/.termux/*
+        cp .object/.draw .object/.bashrc ~/;
+	rm -rf ~/.termux;
+        mkdir -p ~/.termux/;
+        if [ "$version" -le 7 ]; then
+                #rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
+                cp .object/color*.* .object/font*.* ~/.termux/
+                cp .object/termux.properties2 ~/.termux/termux.properties
+                #cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+		termux-reoload-settings
 
+        else
+                rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
+                cp .object/color*.* .object/font*.* ~/.termux/;
+                #cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+                cp .object/termux.properties ~/.termux/
+		termux-reoload-settings
+        fi
+}
 
 # note this is only print 7 charecters
 echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
 apt update -y &> /dev/null;
-apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk -y &> /dev/null;
+apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa ruby -y &> /dev/null;
+gem install lolcat &> /dev/null;
 termux-wake-lock;
 if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
 	echo -e "\e[1;34m[*] \033[32mRemo773.flf figlet font is present\033[0m";
@@ -37,15 +58,16 @@ if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
 else
 wget https://raw.githubusercontent.com/remo7777/REMO773/master/Remo773.flf &> /dev/null;
 sleep 3
-cat Remo773.flf >> $PREFIX/share/figlet/Remo773.flf
+cp Remo773.flf $PREFIX/share/figlet/Remo773.flf;
+cp ASCII-Shadow.flf $PREFIX/share/figlet/ASCII-Shadow.flf;
 sleep 3
-rm Remo773.fif
+rm Remo773.flf
 fi
 THEADER () 
 {
 clear;
 echo -e "\033[01;32m
-Remo773 (2018)
+Remo773 (2020)
 		
 	menu
 +---------------------------*/
@@ -68,7 +90,7 @@ if [ ${#PROC} -gt 8 ]; then
 	sleep 4
 	clear
 echo -e "\033[01;32m
-Remo773 (2018)
+Remo773 (2020)
 
 	menu
 +---------------------------*/
@@ -85,43 +107,68 @@ fi
 done
 clear
 TNAME="$PROC";
-echo -e "\033[32m$(figlet -f Remo773.flf "$TNAME")\033[0m";
+echo ;
+figlet -f ASCII-Shadow "$PROC" | lolcat -t;
 echo "";
-echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
-echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
-echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+#echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
+#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
 echo "";
-echo -e "\e[1;34m┌─[\e[1;32m$PROC\e[1;33m@\e[36mtermux\e[1;34m]\e[0m-\e[1;34m[\e[33m$(date +'%d %a %b')\e[1;34m]\e[0m-\e[1;34m[\e[33m$(date +'%l:%M %p')\e[1;34m]
-\e[1;34m├─[\e[1;33m~\e[1;34m]
-└─[\e[1;35m$\e[1;34m]\e[0m"
+echo -e "
+\033[0;31m┌─[\033[1;34m$TNAME\033[1;33m@\033[1;36mtermux\033[0;31m]─[\033[0;32m~${PWD/#"$HOME"}\033[0;31m]
+\033[0;31m└──╼ \e[1;31m❯\e[1;34m❯\e[1;90m❯\033[0m "
+
 tput setaf 3
 read -p  "Do you want to setup this ? (y/n) " PROC32
 tput sgr 0
 if [ "$PROC32" = "y" ]; then
 	if [ -e $HOME/t-header.txt ]; then
 		rm $HOME/t-header.txt;
-fi
+	fi
 
 	if [ -d $HOME/T-Header ]; then
 	cd $HOME/T-Header
 	fi
-	
-	wget https://raw.githubusercontent.com/remo7777/REMO773/master/t-head.txt &> /dev/null ;
+cat >> ~/.zshrc <<-EOF
+tput cnorm
+clear
+## terminal banner
+figlet -f ASCII-Shadow.flf "$PROC" | lolcat -t;
+echo
+## cursor
+printf '\e[4 q'
+## prompt
+TNAME="$PROC"
+setopt prompt_subst
 
-	sleep 3
-	sed -i '/^TNAME=/d' $HOME/.zshrc
-	echo "TNAME='$PROC'" >> $HOME/.zshrc
-	cat t-head.txt >> $HOME/.zshrc
-	sleep 3
-	rm t-head.txt
-	rm $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
-	if [ -e $PWD/.remo773.zsh-theme ]; then
-	sed -e "s/\Remo773/$PROC/g" .remo773.zsh-theme > $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
+PROMPT=$'
+%{\e[0;31m%}┌─[%{\e[1;34m%}%B%{\${TNAME}%}%{\e[1;33m%}@%{\e[1;36m%}termux%b%{\e[0;31m%}]─[%{\e[0;32m%}%(4~|/%2~|%~)%{\e[0;31m%}]%b
+%{\e[0;31m%}└──╼ %{\e[1;31m%}%B❯%{\e[1;34m%}❯%{\e[1;90m%}❯%{\e[0m%}%b '
+
+## Replace 'ls' with 'exa' (if available) + some aliases.
+if [ -n "\$(command -v exa)" ]; then
+        alias l='exa'
+        alias ls='exa'
+        alias l.='exa -d .*'
+        alias la='exa -a'
+        alias ll='exa -Fhl'
+        alias ll.='exa -Fhl -d .*'
 else
-wget https://raw.githubusercontent.com/remo7777/T-Header/master/.remo773.zsh-theme &> /dev/null
-sed -e "s/\Remo773/$PROC/g" .remo773.zsh-theme > $HOME/.oh-my-zsh/themes/xiong-chiamiov-plus.zsh-theme
+        alias l='ls --color=auto'
+        alias ls='ls --color=auto'
+        alias l.='ls --color=auto -d .*'
+        alias la='ls --color=auto -a'
+        alias ll='ls --color=auto -Fhl'
+        alias ll.='ls --color=auto -Fhl -d .*'
 fi
-source ~/.zshrc
+
+## Safety.
+alias cp='cp -i'
+alias ln='ln -i'
+alias mv='mv -i'
+alias rm='rm -i'
+EOF
+COPY_FILES
 else
 	echo -e "\033[32mHope you like my work..\033[0m"
 fi
@@ -162,13 +209,9 @@ do
 	echo -e "\e[1;34m[*] \e[32mOh-my-zsh new setup....\e[0m";
 	echo "";
 
-	( git clone https://github.com/Cabbagec/termux-ohmyzsh.git "$HOME/termux-ohmyzsh" --depth 1; cp -R "$HOME/termux-ohmyzsh/.termux" "$HOME/.termux"; git clone git://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh" --depth 1; mv "$HOME/.termux" "$HOME/.termux.bak.$(date +%Y.%m.%d-%H:%M:%S)"; cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"; sed -i '/^ZSH_THEME/d' "$HOME/.zshrc"; sed -i '1iZSH_THEME="xiong-chiamiov-plus"' "$HOME/.zshrc"; echo "alias chcolor='$HOME/.termux/colors.sh'" >> "$HOME/.zshrc"; echo "alias chfont='$HOME/.termux/fonts.sh'" >> "$HOME/.zshrc"; rm -rf $HOME/termux-ohmyzsh; termux-wake-unlock; ) &> /dev/null & spin;
+	( git clone --depth 1 git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh;cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc";termux-wake-unlock; ) &> /dev/null & spin;
 	chsh -s zsh;
 if [ -d $HOME/.oh-my-zsh ];
-then
-	ozsh=1
-
-elif [ -e $HOME/.termux/colors.sh ];
 then
 	ozsh=1
 else
