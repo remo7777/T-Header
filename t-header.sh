@@ -114,6 +114,7 @@ else
 fi
 done
 clear
+echo "NAME=$PROC" > ~/.username
 TNAME="$PROC";
 echo ;
 figlet -f ASCII-Shadow "$PROC" | lolcat -t;
