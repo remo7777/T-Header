@@ -24,8 +24,8 @@ echo "";
 }
 COPY_FILES() {
 	version=`getprop ro.build.version.release | sed -e 's/\.//g' | cut -c1`
-	version1=`getprop ro.build.version.release
-        #rm -rf ~/.draw ~/.bashrc ~/.termux/*
+	version1=`getprop ro.build.version.release`
+        rm -rf ~/.draw ~/.termux/*
         cp .object/.draw .object/.bashrc ~/;
 	rm -rf ~/.termux;
         mkdir -p ~/.termux/;
@@ -48,6 +48,7 @@ COPY_FILES() {
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
 		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+		termux-reload-settings
 	fi
 }
 
@@ -176,6 +177,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 EOF
 COPY_FILES
+chsh -s zsh;
 else
 	echo -e "\033[32mHope you like my work..\033[0m"
 fi
