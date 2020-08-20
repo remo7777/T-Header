@@ -186,7 +186,7 @@ clear;
 echo -e "\033[31m$(figlet -f Remo773 "T- Header")\e[0m"
 echo -e "\e[1;32m
 +----------------------------------*/
-Remo773 : (\e[33m12.7.2018\e[32m)
+Remo773 : (\e[33m20.8.2020\e[32m)
 
 1. Oh-my-zsh
 2. Zsh-syntax-highlight (\e[33mplugins\e[01;32m)
@@ -216,7 +216,7 @@ do
 	echo -e "\e[1;34m[*] \e[32mOh-my-zsh new setup....\e[0m";
 	echo "";
 
-	( git clone --depth 1 git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh;cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc";termux-wake-unlock; ) &> /dev/null & spin;
+	( rm -rf ~/.zshrc;git clone --depth 1 git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh;cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc";termux-wake-unlock; ) &> /dev/null & spin;
 	chsh -s zsh;
 if [ -d $HOME/.oh-my-zsh ];
 then
