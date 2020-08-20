@@ -24,24 +24,31 @@ echo "";
 }
 COPY_FILES() {
 	version=`getprop ro.build.version.release | sed -e 's/\.//g' | cut -c1`
+	version1=`getprop ro.build.version.release
         #rm -rf ~/.draw ~/.bashrc ~/.termux/*
         cp .object/.draw .object/.bashrc ~/;
 	rm -rf ~/.termux;
         mkdir -p ~/.termux/;
         if [ "$version" -le 7 ]; then
-                #rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
+                rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
                 cp .object/color*.* .object/font*.* ~/.termux/
                 cp .object/termux.properties2 ~/.termux/termux.properties
-                #cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-		termux-reoload-settings
+                cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+		termux-reload-settings
 
         else
                 rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
                 cp .object/color*.* .object/font*.* ~/.termux/;
-                #cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+                cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
                 cp .object/termux.properties ~/.termux/
-		termux-reoload-settings
+		termux-reload-settings
         fi
+	if [ "$version1" -eq 10 ]; then
+		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
+		cp .object/color*.* .object/font*.* ~/.termux/;
+		cp .object/termux.properties ~/.termux/
+		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+	fi
 }
 
 # note this is only print 7 charecters
@@ -49,7 +56,7 @@ echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
 apt update -y &> /dev/null;
-apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa ruby -y &> /dev/null;
+apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa termux-tools ruby -y &> /dev/null;
 gem install lolcat &> /dev/null;
 termux-wake-lock;
 if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
