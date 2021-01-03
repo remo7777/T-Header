@@ -117,7 +117,7 @@ clear
 echo "NAME=$PROC" > ~/.username
 TNAME="$PROC";
 echo ;
-figlet -f ASCII-Shadow "$PROC" | lolcat -t;
+figlet -f ASCII-Shadow "$PROC" | lolcat;
 echo "";
 #echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
 #echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
@@ -142,7 +142,7 @@ cat >> ~/.zshrc <<-EOF
 tput cnorm
 clear
 ## terminal banner
-figlet -f ASCII-Shadow.flf "$PROC" | lolcat -t;
+figlet -f ASCII-Shadow.flf "$PROC" | lolcat;
 echo
 ## cursor
 printf '\e[4 q'
@@ -176,6 +176,8 @@ alias cp='cp -i'
 alias ln='ln -i'
 alias mv='mv -i'
 alias rm='rm -i'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=39'
+ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
 EOF
 COPY_FILES
 chsh -s zsh;
