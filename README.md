@@ -10,7 +10,8 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 - [x] zsh-syntax-highlighting plugins
 - [x] termux-banner
 - [x] PS1 with custom trim path indicator
-- [ ] other 
+- [x] Custom prompt cursor
+- [ ] other (git prompt)
 
 ## Download and installation steps
 <img src="https://user-images.githubusercontent.com/28594846/42721978-6b90278c-8761-11e8-97f2-eca4f86e837f.jpeg" width="200" hight="220">
