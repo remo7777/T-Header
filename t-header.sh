@@ -130,7 +130,7 @@ echo -e "
 tput setaf 3
 read -p  "Do you want to setup this ? (y/n) " PROC32
 tput sgr 0
-if [ "$PROC32" = "y" ]; then
+if [[ ${PROC32} == [Y/y] ]]; then
 	if [ -e $HOME/t-header.txt ]; then
 		rm $HOME/t-header.txt;
 	fi
@@ -204,7 +204,7 @@ tput setaf 3;
 read -p  "Do you want to setup this ? (y/n) " PROC33
 
 tput sgr 0
-if [ "$PROC33" = "y" ]; then
+if [[ ${PROC33} == [Y/y] ]]; then
 
 
 ozsh=0
