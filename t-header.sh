@@ -262,6 +262,11 @@ echo -e "\e[1;34m[*] \e[32mZsh-syntax-highlighter setup....\e[0m";
 if [ -d $HOME/.plugins/zsh-syntax-highlighting ];
 then
 	zshsyx=1
+	if [ -d $HOME/T-Header ];then
+	(cd ~/T-Header) &> /dev/null
+else
+	cd ~/
+	fi
 else
 	echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
 
