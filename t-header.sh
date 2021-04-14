@@ -59,7 +59,7 @@ COPY_FILES() {
 echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
-apt update -y &> /dev/null;
+(apt update -y && apt upgrade -y) &> /dev/null;
 apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa termux-tools ruby -y &> /dev/null;
 gem install lolcat &> /dev/null;
 termux-wake-lock;
