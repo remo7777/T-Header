@@ -183,7 +183,8 @@ alias mv='mv -i'
 alias rm='rm -i'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=39'
 ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
-bash ~/.banner.sh ${cols} ${TNAME}
+cols=\$(tput cols)
+bash ~/.banner.sh \${cols} \${TNAME}
 EOF
 COPY_FILES
 chsh -s zsh;
