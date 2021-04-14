@@ -3,7 +3,7 @@ var=$(echo $(( ${1} - 2)))
 var2=$(seq -s─ ${var}|tr -d '[:digit:]')
 var3=$(seq -s\  ${var}|tr -d '[:digit:]')
 var4=$(echo $(( ${1} - 20)))
-rm -rf ~/draw.sh
+rm -rf ~/.draw.sh
 cat >> ~/.draw.sh << EOF
 #!/usr/bin/bash
 PUT(){ echo -en "\033[\${1};\${2}H";}

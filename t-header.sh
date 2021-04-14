@@ -122,7 +122,7 @@ TNAME="$PROC";
 col=$(tput cols)
 echo ;
 #figlet -f ASCII-Shadow "$PROC" | lolcat;
-bash ~/T-Header/.banner.sh ${cols} ${TNAME}
+bash ~/T-Header/.banner.sh ${col} ${TNAME}
 echo "";
 #echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
 #echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
@@ -143,9 +143,9 @@ if [[ ${PROC32} == [Y/y] ]]; then
 	if [ -d $HOME/T-Header ]; then
 	cd $HOME/T-Header
 	fi
-if [ -e $HOME/.zshrc ]; then
-	rm -rf ~/.zshrc
-else
+#if [ -e $HOME/.zshrc ]; then
+#	rm -rf ~/.zshrc
+#else
 cat >> ~/.zshrc <<-EOF
 tput cnorm
 clear
@@ -189,7 +189,7 @@ ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
 cols=\$(tput cols)
 bash ~/.banner.sh \${cols} \${TNAME}
 EOF
-fi
+#fi
 COPY_FILES
 chsh -s zsh;
 else
@@ -220,10 +220,10 @@ if [[ ${PROC33} == [Y/y] ]]; then
 
 ozsh=0
 if [ -d $HOME/.oh-my-zsh ]; then
-	rm -rf $HOME/.oh-my-zsh/
-	rm $HOME/.zshrc
+	(rm -rf $HOME/.oh-my-zsh/) &> /dev/null
+	(rm $HOME/.zshrc) &> /dev/null
 elif [ -d $HOME/.zsh ]; then
-	rm -rf $HOME/.zsh
+	(rm -rf $HOME/.zsh) &> /dev/null
 else
 	echo -e "\e[1;34m[*] \e[32mYou hvnt oh-my-zsh...\e[0m";
 fi
@@ -246,15 +246,19 @@ done
 echo -e "\e[1;34m[*] \e[32mZsh-autosuggestion plugins setup..\e[0m";
 
 zshau=0
-mkdir -p $HOME/.plugins/
-cd $HOME/.plugins/
+(rm -rf ~/.plugins) &> /dev/null
+
+mkdir -p ~/.plugins/zsh-autosuggestions
+mkdir -p ~/.plugins/zsh-syntax-highlighting
+#cd $HOME/.plugins/
 
 while [ $zshau = 0 ];
 do
-	( git clone https://github.com/zsh-users/zsh-autosuggestions.git; echo "source ~/.plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+	( git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.plugins/zsh-autosuggestions; echo "source ~/.plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
 	if [ -d $HOME/.plugins/zsh-autosuggestions ];
 then
 	zshau=1
+
 else
 
 echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
@@ -263,21 +267,15 @@ fi
 done
 zshsyx=0
 
-cd $HOME/.plugins/
+#cd $HOME/.plugins/
 
 while [ $zshsyx = 0 ];
 do
 echo -e "\e[1;34m[*] \e[32mZsh-syntax-highlighter setup....\e[0m";
-	( git clone https://github.com/zsh-users/zsh-syntax-highlighting.git; echo "source ~/.plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
+	( git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.plugins/zsh-syntax-highlighting; echo "source ~/.plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
 
-if [ -d $HOME/.plugins/zsh-syntax-highlighting ];
-then
+if [ -d $HOME/.plugins/zsh-syntax-highlighting ];then
 	zshsyx=1
-	if [ -d $HOME/T-Header ];then
-	(cd ~/T-Header) &> /dev/null
-else
-	cd ~/
-	fi
 else
 	echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
 
