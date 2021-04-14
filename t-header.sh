@@ -143,6 +143,9 @@ if [[ ${PROC32} == [Y/y] ]]; then
 	if [ -d $HOME/T-Header ]; then
 	cd $HOME/T-Header
 	fi
+if [ -e $HOME/.zshrc ]; then
+	rm -rf ~/.zshrc
+else
 cat >> ~/.zshrc <<-EOF
 tput cnorm
 clear
@@ -186,6 +189,7 @@ ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
 cols=\$(tput cols)
 bash ~/.banner.sh \${cols} \${TNAME}
 EOF
+fi
 COPY_FILES
 chsh -s zsh;
 else
