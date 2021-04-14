@@ -34,6 +34,7 @@ COPY_FILES() {
                 cp .object/color*.* .object/font*.* ~/.termux/
                 cp .object/termux.properties2 ~/.termux/termux.properties
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+		cp .banner.sh ~/
 		termux-reload-settings
 
         else
@@ -41,6 +42,7 @@ COPY_FILES() {
                 cp .object/color*.* .object/font*.* ~/.termux/;
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
                 cp .object/termux.properties ~/.termux/
+		cp .banner.sh ~/
 		termux-reload-settings
         fi
 	if [ "$version1" -eq 10 ]; then
@@ -48,6 +50,7 @@ COPY_FILES() {
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
 		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
+		cp .banner.sh ~/
 		termux-reload-settings
 	fi
 }
@@ -114,10 +117,12 @@ else
 fi
 done
 clear
-echo "NAME=$PROC" > ~/.username
+#echo "NAME=$PROC" > ~/.username
 TNAME="$PROC";
+col=$(tput cols)
 echo ;
-figlet -f ASCII-Shadow "$PROC" | lolcat;
+#figlet -f ASCII-Shadow "$PROC" | lolcat;
+bash ~/T-Header/.banner.sh ${cols} ${TNAME}
 echo "";
 #echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
 #echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
@@ -142,7 +147,7 @@ cat >> ~/.zshrc <<-EOF
 tput cnorm
 clear
 ## terminal banner
-figlet -f ASCII-Shadow.flf "$PROC" | lolcat;
+#figlet -f ASCII-Shadow.flf "$PROC" | lolcat;
 echo
 ## cursor
 printf '\e[4 q'
@@ -178,6 +183,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=39'
 ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
+bash ~/.banner.sh ${cols} ${TNAME}
 EOF
 COPY_FILES
 chsh -s zsh;
