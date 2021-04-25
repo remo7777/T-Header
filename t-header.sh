@@ -54,14 +54,24 @@ COPY_FILES() {
 		termux-reload-settings
 	fi
 }
-
+rubygem_d () {
+dpkg -s ruby2 &> /dev/null
+if [[ $? -eq 0 ]]; then
+	apt install --reinstall ruby2 -y;
+	gem install lolcat &> /dev/null
+else
+	apt install --reinstall ruby -y;
+	gem install lolcat &> /dev/null
+fi
+	
+}
 # note this is only print 7 charecters
 echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
 (apt update -y && apt upgrade -y) &> /dev/null;
-apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa termux-tools ruby -y &> /dev/null;
-gem install lolcat &> /dev/null;
+apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa termux-tools -y &> /dev/null;
+rubygem_d &> /dev/null
 termux-wake-lock;
 if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
 	echo -e "\e[1;34m[*] \033[32mRemo773.flf figlet font is present\033[0m";
