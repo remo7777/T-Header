@@ -58,10 +58,10 @@ rubygem_d () {
 dpkg -s ruby2 &> /dev/null
 if [[ $? -eq 0 ]]; then
 	apt install --reinstall ruby2 -y;
-	gem install lolcat &> /dev/null
+	gem install lolcat*.gem &> /dev/null
 else
 	apt install --reinstall ruby -y;
-	gem install lolcat &> /dev/null
+	gem install lolcat*.gem &> /dev/null
 fi
 	
 }
