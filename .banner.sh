@@ -17,28 +17,18 @@ clear
 echo -e "\033[35;1m"
 #tput setaf 5
 echo "┌${var2}┐"
+for ((i=1; i<=8; i++)); do
 echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
-echo "│${var3}│"
+done
 echo "└${var2}┘"
 PUT 4 0
 figlet -c -f ASCII-Shadow -w ${1} "${2}" | lolcat -t
 PUT 3 0
 echo -e "\033[35;1m"
 #tput setaf 5
+for ((i=1; i<=7; i++)); do
 echo "│"
-echo "│"
-echo "│"
-echo "│"
-echo "│"
-echo "│"
-echo "│"
-#echo "│"
+done
 PUT 10 ${var4}
 echo -e "\e[32mBoot Script \e[33m2.0\e[0m"
 PUT 12 0
