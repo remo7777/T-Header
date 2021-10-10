@@ -1,5 +1,10 @@
 #!/bin/bash
-
+if [[ "$1" == "--remove" ]]; then
+	rm -rf ~/.oh-my-zsh ~/.plugins;
+	chsh -s bash;
+	termux-reload-settings;
+	kill -9 $PPID
+fi
 spin () {
 
 local pid=$!
