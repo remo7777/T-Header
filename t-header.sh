@@ -45,7 +45,7 @@ COPY_FILES() {
 		cp .banner.sh ~/
 		termux-reload-settings
         fi
-	if [ "$version1" -eq 10 ]; then
+	if [ "$version1" -eq 11 ]; then
 		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
