@@ -34,7 +34,7 @@ COPY_FILES() {
         cp .object/.draw .object/.bashrc ~/;
 	rm -rf ~/.termux;
         mkdir -p ~/.termux/;
-        if [ "$version" -le 7 ]; then
+        if [[ "$version" -le 7 ]]; then
                 rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
                 cp .object/color*.* .object/font*.* ~/.termux/
                 cp .object/termux.properties2 ~/.termux/termux.properties
@@ -50,7 +50,7 @@ COPY_FILES() {
 		cp .banner.sh ~/
 		termux-reload-settings
         fi
-	if [ "$version1" -eq 11 ]; then
+	if [[ "$version1" -eq 10 ]] || [[ "$version1" -eq 11 ]]; then
 		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
@@ -108,7 +108,7 @@ do
 tput setaf 3
 read -p "Pleas enter Name : " PROC
 tput sgr 0
-if [ ${#PROC} -gt 8 ]; then
+if [[ ${#PROC} -gt 8 ]]; then
 	echo -e "\e[1;34m[*] \033[32mToo long  characters You have input...\033[0m"
 	echo ""
 	echo -e "\033[32mPlz enter less than \033[33m9 \033[32mcharacters Name\033[0m" | pv -qL 10;
