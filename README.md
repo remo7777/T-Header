@@ -22,7 +22,8 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 3. `cd T-Header/`
 4. `ls`
 5. `bash t-header.sh`
-6. after complete all processing just --open new session--
+6. after complete all processing just --open new session-- or `source ~/.zshrc`
+7. For remove tool `cd ~/T-header && bash t-header.sh --remove && exit`
 #
 Video guide available on YouTube channel { [Remo773 T-Bag](https://youtu.be/8Duxj_-b4og) }
 
