@@ -13,6 +13,11 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 - [x] Custom prompt cursor
 - [ ] other (git prompt)
 
+## Termux keyboard features with shortcuts
+
+- [x] open new session `CTRL + t`
+- [x] close terminal <img src="https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/keyboard/materialsymbolsoutlined/keyboard_20px.svg"> swipe up throughout that icon
+
 ## Download and installation steps
 <img src="https://user-images.githubusercontent.com/28594846/42721978-6b90278c-8761-11e8-97f2-eca4f86e837f.jpeg" width="200" hight="220">
 
