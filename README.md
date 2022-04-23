@@ -16,7 +16,7 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 ## Termux keyboard features with shortcuts
 
 - [x] open new session `CTRL + t`
-- [x] close terminal <img src="https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/keyboard/materialsymbolsoutlined/keyboard_20px.svg"> swipe up throughout that icon
+- [x] close terminal <sub><img src="https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/keyboard/materialsymbolsoutlined/keyboard_20px.svg"></sub> swipe up throughout that icon
 - [x] swich between two sessions `CTRL + 4` and `CTRL + 5`
 - [x] other shortcuts need video guide.
 
