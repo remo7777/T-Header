@@ -1,3 +1,4 @@
+allow-external-apps = true
 shortcut.create-session = ctrl + t
 shortcut.next-session = ctrl + 5
 shortcut.previous-session = ctrl + 4
