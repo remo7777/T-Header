@@ -24,7 +24,7 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 <img src="https://user-images.githubusercontent.com/28594846/42721978-6b90278c-8761-11e8-97f2-eca4f86e837f.jpeg" width="200" hight="220">
 
 
-1. `apt update && apt install git -y`
+1. `apt update && yes | apt upgrade && apt update && apt install git -y`
 2. `git clone https://github.com/remo7777/T-Header.git`
 3. `cd T-Header/`
 4. `ls`
