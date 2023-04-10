@@ -1,6 +1,7 @@
 #!/bin/bash
 if [[ "$1" == "--remove" ]]; then
 	rm -rf ~/.oh-my-zsh ~/.plugins;
+	rm -rf ~/.bashrc;
 	chsh -s bash;
 	termux-reload-settings;
 	kill -9 $PPID
