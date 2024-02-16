@@ -76,7 +76,7 @@ echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
 (apt update -y && apt upgrade -y) &> /dev/null;
-apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk exa termux-tools -y &> /dev/null;
+apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk termux-tools -y &> /dev/null;
 rubygem_d &> /dev/null
 termux-wake-lock;
 if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
