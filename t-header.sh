@@ -40,7 +40,7 @@ COPY_FILES() {
                 cp .object/color*.* .object/font*.* ~/.termux/
                 cp .object/termux.properties2 ~/.termux/termux.properties
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-		cp .banner.sh ~/
+		#cp .banner.sh ~/
 		termux-reload-settings
 
         else
@@ -48,7 +48,7 @@ COPY_FILES() {
                 cp .object/color*.* .object/font*.* ~/.termux/;
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
                 cp .object/termux.properties ~/.termux/
-		cp .banner.sh ~/
+		#cp .banner.sh ~/
 		termux-reload-settings
         fi
 	if [[ "$version1" -eq 10 ]] || [[ "$version1" -eq 11 ]]; then
@@ -56,7 +56,7 @@ COPY_FILES() {
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
 		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-		cp .banner.sh ~/
+		#cp .banner.sh ~/
 		termux-reload-settings
 	fi
 }
