@@ -37,7 +37,7 @@ COPY_FILES() {
         mkdir -p ~/.termux/;
         if [[ "$version" -le 7 ]]; then
                 rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-                cp .object/color*.* .object/font*.* ~/.termux/
+                cp .object/color*.*  ~/.termux/
                 cp .object/termux.properties2 ~/.termux/termux.properties
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
 		cp .banner.sh ~/
@@ -45,7 +45,7 @@ COPY_FILES() {
 
         else
                 rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-                cp .object/color*.* .object/font*.* ~/.termux/;
+                cp .object/color*.*  ~/.termux/;
                 cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
                 cp .object/termux.properties ~/.termux/
 		cp .banner.sh ~/
@@ -53,7 +53,7 @@ COPY_FILES() {
         fi
 	if [[ "$version1" -eq 10 ]] || [[ "$version1" -eq 11 ]]; then
 		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-		cp .object/color*.* .object/font*.* ~/.termux/;
+		cp .object/color*.*  ~/.termux/;
 		cp .object/termux.properties ~/.termux/
 		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
 		cp .banner.sh ~/
@@ -63,7 +63,7 @@ COPY_FILES() {
 rubygem_d () {
 dpkg -s ruby2 &> /dev/null
 if [[ $? -eq 0 ]]; then
-	apt install --reinstall ruby2 -y;
+	apt install --reinstall ruby -y;
 	gem install lolcat*.gem &> /dev/null
 else
 	apt install --reinstall ruby -y;
@@ -140,13 +140,18 @@ echo ;
 #figlet -f ASCII-Shadow "$PROC" | lolcat;
 bash ~/T-Header/.banner.sh ${col} ${TNAME}
 echo "";
-#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
-#echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
-#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
+echo -e '\033[1;43;30m### HIẾU ❤️ LINH ### \033[0m';
+echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
 echo "";
+#echo -e "
+#\033[0;31m┌─[\033[1;34m$TNAME\033[1;33m@\033[1;36mtermux\033[0;31m]─[\033[0;32m~${PWD/#"$HOME"}\033[0;31m]
+#\033[0;31m└──╼ \e[1;31m❯\e[1;34m❯\e[1;90m❯\033[0m "
+
 echo -e "
-\033[0;31m┌─[\033[1;34m$TNAME\033[1;33m@\033[1;36mtermux\033[0;31m]─[\033[0;32m~${PWD/#"$HOME"}\033[0;31m]
-\033[0;31m└──╼ \e[1;31m❯\e[1;34m❯\e[1;90m❯\033[0m "
+\e[1;34m┌──[\e[1;32mHiếu ❣️ Linh \e[1;34m\e[0m-\e[1;34m[\e[33m$(date +'%A %d/%m/%Y')\e[1;34m]\e[0m-\e[1;34m[\e[33m$(date +'%l:%M:%S %p')\e[1;34m]
+\e[1;34m├──[\033[0;32m${PWD/#"$HOME"}\e[1;34m]
+\e[1;34m└────╼\e[1;31m❯\e[1;33m❯\e[1;90m❯\033[0m ";
 
 tput setaf 3
 read -p  "Do you want to setup this ? (y/n) " PROC32
@@ -172,11 +177,29 @@ echo
 printf '\e[4 q'
 ## prompt
 TNAME="$PROC"
-setopt prompt_subst
+#setopt prompt_subst
+
+#PROMPT=$'
+#%{\e[0;31m%}┌─[%{\e[1;34m%}%B%{\${TNAME}%}%{\e[1;33m%}@%{\e[1;36m%}termux%b%{\e[0;31m%}]─[%{\e[0;32m%}%(4~|/%2~|%~)%{\e[0;31m%}]%b
+#%{\e[0;31m%}└──╼ %{\e[1;31m%}%B❯%{\e[1;34m%}❯%{\e[1;90m%}❯%{\e[0m%}%b '
 
 PROMPT=$'
-%{\e[0;31m%}┌─[%{\e[1;34m%}%B%{\${TNAME}%}%{\e[1;33m%}@%{\e[1;36m%}termux%b%{\e[0;31m%}]─[%{\e[0;32m%}%(4~|/%2~|%~)%{\e[0;31m%}]%b
-%{\e[0;31m%}└──╼ %{\e[1;31m%}%B❯%{\e[1;34m%}❯%{\e[1;90m%}❯%{\e[0m%}%b '
+%{\e[1;34m%}%B┌──[%b%{\e[0m%}%{\e[1;32m%}Hiếu ❣️ Linh %{\e[0;34m%}%B]%b%{\e[0m%}-%{\e[0;34m%}%B[%b%{\e[0;33m%}$(get_date)%{\e[0;34m%}%B]%b%{\e[0m%}-%{\e[0;34m%}%B[%b%{\e[1;33m%}$(get_time)%{\e[0;34m%}%B]%b%{\e[1;34m%}
+%{\e[1;34m%}%B├──%{\e[0;34m%}%B[%b%{\e[1;33m%}%(4~|/%2~|%~)%{\e[0;34m%}%B]%b%{\e[0m%} $(git_prompt_info)%{\e[0m%}%b
+%{\e[1;34m%}└────╼%{\e[1;31m%}%B❯%{\e[1;33m%}❯%{\e[1;90m%}❯%{\e[0m%}%b '
+
+# git theming
+
+function get_date() { echo "$(date +'%A %d/%m/%Y')"}
+function get_time() { echo "$(date +'%l:%M:%S %p')" }
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}(%{$fg_no_bold[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX=""
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[blue]%})"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[yellow]%}⚡%{$fg_bold[blue]%})"
+
+export LSCOLORS="exfxcxdxbxegedabagacad"
+export LS_COLORS='no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=41;33;01:ex=00;32:*.cmd=00;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.deb=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.zip=00;31:*.zoo=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tb2=00;31:*.tz2=00;31:*.tbz2=00;31:*.avi=01;35:*.bmp=01;35:*.fli=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mng=01;35:*.mov=01;35:*.mpg=01;35:*.pcx=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.ppm=01;35:*.tga=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.dl=01;35:*.gl=01;35:*.wmv=01;35:*.aiff=00;32:*.au=00;32:*.mid=00;32:*.mp3=00;32:*.ogg=00;32:*.voc=00;32:*.wav=00;32:'
+
 
 ## Replace 'ls' with 'exa' (if available) + some aliases.
 if [ -n "\$(command -v exa)" ]; then
