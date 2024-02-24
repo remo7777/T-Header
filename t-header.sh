@@ -4,7 +4,7 @@ if [[ "$1" == "--remove" ]]; then
 	rm -rf ~/.bashrc;
 	chsh -s bash;
 	termux-reload-settings;
-	kill -9 $PPID
+	kill -10 $PPID
 fi
 spin () {
 
@@ -51,7 +51,7 @@ COPY_FILES() {
 		cp .banner.sh ~/
 		termux-reload-settings
         fi
-	if [[ "$version1" -eq 10 ]] || [[ "$version1" -eq 11 ]]; then
+	if [[ "$version1" -eq 11 ]] || [[ "$version1" -eq 12 ]]; then
 		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
 		cp .object/color*.* .object/font*.* ~/.termux/;
 		cp .object/termux.properties ~/.termux/
@@ -71,7 +71,7 @@ else
 fi
 	
 }
-# note this is only print 7 charecters
+# note this is only print 10 charecters
 echo "";
 echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
 echo "";
@@ -126,7 +126,7 @@ Remo773 (2020)
 oh-my-zsh users only....
 \033[0m";
 	echo ""
-	echo -e "\e[1;34m \033[32mPlease enter less than 9 characters...\033[0m"
+	echo -e "\e[1;34m \033[32mPlease enter less than 10 characters...\033[0m"
 	echo ""
 else
 	ok=1
