@@ -86,15 +86,15 @@ if command -v fzf >/dev/null 2>&1; then
       fi
       ;;
 
-    */bash)
-      # Load global bash-completion if available
-      if [ -f $PREFIX/share/fzf/completion.bash ]; then
-        . $PREFIX/share/fzf/completion.bash
-      fi
-
-      # Load fzf bash completion (inline)
-      source <(fzf --bash)
-      ;;
+    # */bash)
+    #   # Load global bash-completion if available
+    #   if [ -f $PREFIX/share/fzf/completion.bash ]; then
+    #     . $PREFIX/share/fzf/completion.bash
+    #   fi
+    #
+    #   # Load fzf bash completion (inline)
+    #   source <(fzf --bash)
+    #   ;;
   esac
 fi
 # =========[ Custom T-header(logo with figlet) Setup ]=========
