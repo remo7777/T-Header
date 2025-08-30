@@ -1,312 +1,328 @@
-#!/bin/bash
-if [[ "$1" == "--remove" ]]; then
-	rm -rf ~/.oh-my-zsh ~/.plugins;
-	rm -rf ~/.bashrc;
-	chsh -s bash;
-	termux-reload-settings;
-	kill -9 $PPID
-fi
-spin () {
+#!/data/data/com.termux/files/usr/bin/env bash
 
-local pid=$!
-local delay=0.25
-local spinner=( '█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█' )
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+LIB_DIR="$SCRIPT_DIR/lib"
+szf="File Size of"
+tsize=$(stty size | cut -d ' ' -f 2)
+pkgsize=$(apt-cache pkgnames | wc -l)
 
-while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+FILES=(pbanner progress fmenu confzsh)
 
-for i in "${spinner[@]}"
-do
-	tput civis
-	echo -ne "\033[34m\r[*] Downloading..please wait.........\e[33m[\033[32m$i\033[33m]\033[0m   ";
-	sleep $delay
-	printf "\b\b\b\b\b\b\b\b";
+for f in "${FILES[@]}"; do
+  if [[ -f "$LIB_DIR/$f" ]]; then
+    . "$LIB_DIR/$f"
+  else
+    echo "Warning: $LIB_DIR/$f not found"
+  fi
 done
-done
-printf "   \b\b\b\b\b"
-tput cnorm
-printf "\e[1;33m [Done]\e[0m";
-echo "";
+# ===== Parse Termux color theme from ~/.termux/colors.properties =====
+conf() {
+  export FZF_DEFAULT_OPTS=""
+  COLOR_FILE="$HOME/.termux/colors.properties"
 
+  if [[ -f "$COLOR_FILE" ]]; then
+    declare -A color
+    while IFS='=' read -r key value; do
+      [[ $key =~ ^#.*$ || -z $key ]] && continue
+      color[$key]="$value"
+    done <"$COLOR_FILE"
+
+    export FZF_DEFAULT_OPTS="--color=fg:${color[foreground]},bg:${color[background]},hl:${color[color4]},fg+:${color[foreground]},bg+:${color[color0]},hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2  --reverse --height=10 --no-info --pointer=' '"
+  else
+    export FZF_DEFAULT_OPTS="--color=hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 --reverse --height=10 --no-info --pointer=' '"
+  fi
 }
-COPY_FILES() {
-	version=`getprop ro.build.version.release | sed -e 's/\.//g' | cut -c1`
-	version1=`getprop ro.build.version.release`
-        rm -rf ~/.draw ~/.termux/*
-        cp .object/.draw .object/.bashrc ~/;
-	rm -rf ~/.termux;
-        mkdir -p ~/.termux/;
-        if [[ "$version" -le 7 ]]; then
-                rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-                cp .object/color*.* .object/font*.* ~/.termux/
-                cp .object/termux.properties2 ~/.termux/termux.properties
-                cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-		cp .banner.sh ~/
-		termux-reload-settings
 
-        else
-                rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-                cp .object/color*.* .object/font*.* ~/.termux/;
-                cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-                cp .object/termux.properties ~/.termux/
-		cp .banner.sh ~/
-		termux-reload-settings
+install_packages() {
+  # package list
+  packages=(curl fd figlet ruby boxes gum bat logo-ls zsh)
+
+  echo -e "\n[🔧] Installing required packages...\n"
+
+  for pkg in "${packages[@]}"; do
+    if command -v "$pkg" >/dev/null 2>&1; then
+      echo "[✔] $pkg already installed"
+    else
+      echo "[➕] Installing $pkg ..."
+      pkg install -y "$pkg"
+    fi
+  done
+
+  # Check for lolcat
+  if command -v lolcat >/dev/null 2>&1; then
+    echo "[✔] lolcat already installed"
+  else
+    echo "[➕] Installing lolcat via gem..."
+    gem install lolcat
+    if command -v lolcat >/dev/null 2>&1; then
+      echo "[✔] lolcat installed successfully"
+    else
+      echo "[✘] lolcat installation failed"
+    fi
+  fi
+
+  # Download custom figlet font (pixelfont)
+  FONT_PATH="$PREFIX/share/figlet/pixelfont.flf"
+  if [[ ! -f "$FONT_PATH" ]]; then
+    echo "[➕] Downloading pixelfont.flf ..."
+    curl -L \
+      https://raw.githubusercontent.com/imegeek/figlet-fonts/master/pixelfont.flf \
+      -o "$FONT_PATH"
+    echo "[✔] Font saved to $FONT_PATH"
+  else
+    echo "[✔] pixelfont.flf already exists"
+  fi
+
+  # Demo text with lolcat if available
+  echo -e "\n[🎨] Demo text:\n"
+  if command -v lolcat >/dev/null 2>&1; then
+    echo "lolcat Installed!" | figlet -f pixelfont | lolcat
+  else
+    echo "lolcat not Installed!" | figlet -f pixelfont
+  fi
+  chsh -s zsh
+}
+
+# Run function
+menu_main() {
+
+  while true; do
+    conf
+    banner "${figftemp}" "${logotemp}" >>${user}
+    cat "${user}"
+    echo ""
+    choice=$(
+      printf "1. Install packages\n2. Setup\n3. Exit" |
+        fzf --prompt="Use ↑/↓ to navigate, Enter to select: " --exit-0
+    )
+
+    case $choice in
+      "1. Install packages")
+        echo -e "\033[1;32m[✔] Installing packages...\033[0m"
+        install_packages 
+        sleep 1
+        ;;
+      "2. Setup")
+        menu_setup
+        ;;
+      "3. Exit")
+        echo -e "\033[1;31m[✘] Exiting...\033[0m"
+        break
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+}
+
+menu_setup() {
+  choice=$(
+    printf "1. Zsh\n2. Fish (coming soon)" |
+      sed 's/2\. Fish (coming soon)/2. Fish \x1b[31m(\x1b[33mcoming soon\x1b[31m)\x1b[0m/' |
+      fzf --prompt="Setup option ➤ " --ansi --exit-0
+  )
+
+  case $choice in
+    "1. Zsh")
+      menu_zsh_setup
+      # echo -e "\033[1;34m[ℹ] Setting up Zsh...\033[0m"
+      sleep 1
+      ;;
+    "2. Fish (coming soon)")
+      echo -e "\033[1;33m[⚠] Fish setup is coming soon!\033[0m"
+      sleep 1
+      ;;
+  esac
+}
+
+menu_zsh_setup() {
+  # Check if oh-my-zsh is installed
+  if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    # Not installed → only show setup option
+    local subchoice
+    subchoice=$(
+      printf "1. Install Oh-my-zsh" |
+        fzf --prompt="Zsh Setup ➤ " --ansi --exit-0
+    )
+    case $subchoice in
+      "1. Install Oh-my-zsh")
+        echo -e "\033[1;32m[✔] Installing Oh-my-zsh...\033[0m"
+        install_oh_my_zsh
+        ;;
+    esac
+  else
+    # Already installed → show main options
+    local main_options="1. Oh-my-zsh (Plugins Manager)\n2. Theader setup"
+
+    local subchoice
+    subchoice=$(
+      printf "%b" "$main_options" |
+        fzf --prompt="Zsh Options ➤ " --ansi --exit-0
+    )
+
+    case $subchoice in
+      "1. Oh-my-zsh (Plugins Manager)")
+        # Plugins Manager submenu
+        local plugin_line
+        plugin_line=$(sed -n 's/^plugins=(\(.*\))/\1/p' "$ZSHRC" | tr -d ' ')
+
+        local pm_options="1. Add Zsh Plugins"
+        # Show remove option only if plugins exist
+        if [[ -n "$plugin_line" ]]; then
+          pm_options+="\n2. Remove Plugins"
         fi
-	if [[ "$version1" -eq 10 ]] || [[ "$version1" -eq 11 ]]; then
-		rm -rf $PREFIX/share/figlet/ASCII-Shadow.flf
-		cp .object/color*.* .object/font*.* ~/.termux/;
-		cp .object/termux.properties ~/.termux/
-		cp .object/ASCII-Shadow.flf $PREFIX/share/figlet/
-		cp .banner.sh ~/
-		termux-reload-settings
-	fi
-}
-rubygem_d () {
-dpkg -s ruby2 &> /dev/null
-if [[ $? -eq 0 ]]; then
-	apt install --reinstall ruby2 -y;
-	gem install lolcat*.gem &> /dev/null
-else
-	apt install --reinstall ruby -y;
-	gem install lolcat*.gem &> /dev/null
-fi
-	
-}
-# note this is only print 7 charecters
-echo "";
-echo -e "\e[1;34m[*] \e[32minstall packages....\e[0m";
-echo "";
-(apt update -y && apt upgrade -y) &> /dev/null;
-apt install figlet pv ncurses-utils binutils coreutils wget git zsh termux-api procps gawk termux-tools -y &> /dev/null;
-rubygem_d &> /dev/null
-termux-wake-lock;
-if [ -e $PREFIX/share/figlet/Remo773.flf ]; then
-	echo -e "\e[1;34m[*] \033[32mRemo773.flf figlet font is present\033[0m";
-	sleep 4
-else
-wget https://raw.githubusercontent.com/remo7777/REMO773/master/Remo773.flf &> /dev/null;
-sleep 3
-cp Remo773.flf $PREFIX/share/figlet/Remo773.flf;
-cp ASCII-Shadow.flf $PREFIX/share/figlet/ASCII-Shadow.flf;
-sleep 3
-rm Remo773.flf
-fi
-THEADER () 
-{
-clear;
-echo -e "\033[01;32m
-Remo773 (2020)
-		
-	menu
-+---------------------------*/
-.......Terminal-Header......
-+---------------------------*/
-oh-my-zsh users only....
-\033[0m";
-ok=0
-while [ $ok = 0 ];
-do
-	echo ""
-tput setaf 3
-read -p "Pleas enter Name : " PROC
-tput sgr 0
-if [[ ${#PROC} -gt 8 ]]; then
-	echo -e "\e[1;34m[*] \033[32mToo long  characters You have input...\033[0m"
-	echo ""
-	echo -e "\033[32mPlz enter less than \033[33m9 \033[32mcharacters Name\033[0m" | pv -qL 10;
-	echo ""
-	sleep 4
-	clear
-echo -e "\033[01;32m
-Remo773 (2020)
 
-	menu
-+---------------------------*/
-.......Terminal-Header......
-+---------------------------*/
-oh-my-zsh users only....
-\033[0m";
-	echo ""
-	echo -e "\e[1;34m \033[32mPlease enter less than 9 characters...\033[0m"
-	echo ""
-else
-	ok=1
-fi
-done
-clear
-#echo "NAME=$PROC" > ~/.username
-TNAME="$PROC";
-col=$(tput cols)
-echo ;
-#figlet -f ASCII-Shadow "$PROC" | lolcat;
-bash ~/T-Header/.banner.sh ${col} ${TNAME}
-echo "";
-#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
-#echo -e '\033[1;43;30m### SUBSCRIBE MY YOUTUBE CHANNEL ### \033[0m';
-#echo -e '\e[0;35m+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\e[00m';
-echo "";
-echo -e "
-\033[0;31m┌─[\033[1;34m$TNAME\033[1;33m@\033[1;36mtermux\033[0;31m]─[\033[0;32m~${PWD/#"$HOME"}\033[0;31m]
-\033[0;31m└──╼ \e[1;31m❯\e[1;34m❯\e[1;90m❯\033[0m "
+        local pm_choice
+        pm_choice=$(
+          printf "%b" "$pm_options" |
+            fzf --prompt="Plugins Manager ➤ " --ansi --exit-0
+        )
 
-tput setaf 3
-read -p  "Do you want to setup this ? (y/n) " PROC32
-tput sgr 0
-if [[ ${PROC32} == [Y/y] ]]; then
-	if [ -e $HOME/t-header.txt ]; then
-		rm $HOME/t-header.txt;
-	fi
-
-	if [ -d $HOME/T-Header ]; then
-	cd $HOME/T-Header
-	fi
-#if [ -e $HOME/.zshrc ]; then
-#	rm -rf ~/.zshrc
-#else
-cat >> ~/.zshrc <<-EOF
-tput cnorm
-clear
-## terminal banner
-#figlet -f ASCII-Shadow.flf "$PROC" | lolcat;
-echo
-## cursor
-printf '\e[4 q'
-## prompt
-TNAME="$PROC"
-setopt prompt_subst
-
-PROMPT=$'
-%{\e[0;31m%}┌─[%{\e[1;34m%}%B%{\${TNAME}%}%{\e[1;33m%}@%{\e[1;36m%}termux%b%{\e[0;31m%}]─[%{\e[0;32m%}%(4~|/%2~|%~)%{\e[0;31m%}]%b
-%{\e[0;31m%}└──╼ %{\e[1;31m%}%B❯%{\e[1;34m%}❯%{\e[1;90m%}❯%{\e[0m%}%b '
-
-## Replace 'ls' with 'exa' (if available) + some aliases.
-if [ -n "\$(command -v exa)" ]; then
-        alias l='exa'
-        alias ls='exa'
-        alias l.='exa -d .*'
-        alias la='exa -a'
-        alias ll='exa -Fhl'
-        alias ll.='exa -Fhl -d .*'
-else
-        alias l='ls --color=auto'
-        alias ls='ls --color=auto'
-        alias l.='ls --color=auto -d .*'
-        alias la='ls --color=auto -a'
-        alias ll='ls --color=auto -Fhl'
-        alias ll.='ls --color=auto -Fhl -d .*'
-fi
-
-## Safety.
-alias cp='cp -i'
-alias ln='ln -i'
-alias mv='mv -i'
-alias rm='rm -i'
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=39'
-ZSH_HIGHLIGHT_STYLES[comment]=fg=226,bold
-cols=\$(tput cols)
-bash ~/.banner.sh \${cols} \${TNAME}
-EOF
-#fi
-COPY_FILES
-chsh -s zsh;
-source ~/.zshrc;
-else
-	echo -e "\033[32mHope you like my work..\033[0m"
-fi
-exit
+        case $pm_choice in
+          "1. Add Zsh Plugins")
+            echo -e "\033[1;34m[ℹ] Opening Add Plugins...\033[0m"
+            fzf_add_plugin
+            ;;
+          "2. Remove Plugins")
+            echo -e "\033[1;31m[⚠] Removing Zsh Plugins...\033[0m"
+            remove_zsh_plugin
+            ;;
+        esac
+        ;;
+      "2. Theader setup")
+        echo -e "\033[1;36m[ℹ] Running Theader setup...\033[0m"
+        # Your Theader setup logic
+        menu_theader_setup
+        ;;
+    esac
+  fi
 }
 
-clear;
-echo -e "\033[31m$(figlet -f Remo773 "T- Header")\e[0m"
-echo -e "\e[1;32m
-+----------------------------------*/
-Remo773 : (\e[33m14.4.2021\e[32m)
+# t-header setup
+menu_theader_setup() {
+  local theader_dir="$HOME/.config/theader"
 
-1. Oh-my-zsh
-2. Zsh-syntax-highlight (\e[33mplugins\e[01;32m)
-3. Zsh-command-autosuggest (\e[33mplugins\e[01;32m)
-4. Terminal-Header
-5. Custom PS1 prompt ( \e[33mBest one\e[1;32m )
-+----------------------------------*/
-\033[0m";
-tput setaf 3;
-read -p  "Do you want to setup this ? (y/n) " PROC33
+  # Check if Theader is installed (directory exists)
+  if [[ ! -d "$theader_dir" ]]; then
+    # Not installed → only show setup option
+    local subchoice
+    subchoice=$(
+      printf "1. Setup Theader" |
+        fzf --prompt="Theader Setup ➤ " --ansi --exit-0
+    )
+    case $subchoice in
+      "1. Setup Theader")
+        echo -e "\033[1;32m[✔] Setting up Theader...\033[0m"
+        setup_theader
+        ;;
+    esac
+  else
+    # Already installed → show options
+    local main_options="1. Change Logo\n2. Change Title\n3. Change Keyboard\n4. Change ZSH Theme\n5. Remove Theader"
 
-tput sgr 0
-if [[ ${PROC33} == [Y/y] ]]; then
+    local subchoice
+    subchoice=$(
+      printf "%b" "$main_options" |
+        fzf --prompt="Theader Options ➤ " --ansi --exit-0
+    )
 
+    case $subchoice in
+      "1. Change Logo")
+        echo -e "\033[1;34m[ℹ] Changing Logo...\033[0m"
+        c_logo
+        ;;
+      "2. Change Title")
+        echo -e "\033[1;34m[ℹ] Changing Title...\033[0m"
+        type_title
+        ;;
+      "3. Change Keyboard")
+        echo -e "\033[1;34m[ℹ] Changing Keyboard Layout...\033[0m"
+        key_properties
+        ;;
+      "4. Change ZSH Theme")
+        echo -e "\033[1;34m[ℹ] Changing ZSH Theme...\033[0m"
+        c_theme
+        ;;
+      "5. Remove Theader")
+        echo -e "\033[1;31m[⚠] Removing Theader...\033[0m"
+        remove_theader
+        ;;
+    esac
+  fi
+}
+# theader setup function
+setup_theader() {
+  theader_dir="$HOME/.config/theader"
+  # ZSH="$HOME/.oh-my-zsh"
+  # ZSHRC="$HOME/.zshrc"
+  TEMPLATE="$ZSH/templates/zshrc.zsh-template"
 
-ozsh=0
-if [ -d $HOME/.oh-my-zsh ]; then
-	(rm -rf $HOME/.oh-my-zsh/) &> /dev/null
-	(rm $HOME/.zshrc) &> /dev/null
-elif [ -d $HOME/.zsh ]; then
-	(rm -rf $HOME/.zsh) &> /dev/null
-else
-	echo -e "\e[1;34m[*] \e[32mYou hvnt oh-my-zsh...\e[0m";
+  if [ -f "$ZSHRC" ]; then
+    # line count check
+    line_count=$(wc -l <"$ZSHRC")
+
+    if [ "$line_count" -gt 104 ]; then
+      echo "⚠️  .zshrc has $line_count lines, creating backup..."
+      cp "$ZSHRC" "$ZSHRC.backup.$(date +%Y%m%d%H%M%S)"
+
+      # plugins line extract
+      old_plugins=$(grep "^plugins=" "$ZSHRC" | head -n1)
+
+      # plugins line
+      if [ -n "$old_plugins" ]; then
+        echo "🔗 Found old plugins: $old_plugins"
+
+        # template copy
+        cp "$TEMPLATE" "$ZSHRC"
+
+        # template plugins replace
+        sed -i "s/^plugins=(git)/$old_plugins/" "$ZSHRC"
+        echo "✅ New .zshrc created with preserved plugins"
+      else
+        echo "⚠️ No plugins line found in old .zshrc, using default"
+        cp "$TEMPLATE" "$ZSHRC"
+      fi
+    else
+      echo ".zshrc has only $line_count lines, no reset needed."
+    fi
+  else
+    cp "$TEMPLATE" "$ZSHRC"
+    sed -i 's/plugins=(git)/plugins=()/' "$ZSHRC"
+    echo "✅ Default .zshrc created"
+  fi
+  create_custom_theme
+  cp $SCRIPT_DIR/dotfile/.* $HOME/
+  printf "HISTSIZE=100000\nSAVEHIST=100000\n# profile source\nsource \"\$HOME/.profile\"\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>$HOME/.zshrc
+  mkdir -p $theader_dir
+  for d in bin logo tpt lib theader.cfg; do
+    if [[ -e "$SCRIPT_DIR/$d" ]]; then 
+      cp -r "$SCRIPT_DIR/$d" "$theader_dir/"
+    else
+      echo "Warning: missing $SCRIPT_DIR/$d"
+    fi
+  done
+  if [[ -f $theader_dir/bin/theader ]]; then
+    install -Dm700 $theader_dir/bin/theader "$PREFIX"/bin/theader
+    for i in clogo ctitle ctpro cztheme; do
+      ln -sfr "$PREFIX"/bin/theader "$PREFIX"/bin/$i
+    done
+    echo "theader installed successfully ✅"
+  else
+    echo "Error: $theader_dir/bin/theader not found!"
+  fi
+
+}
+# checking screen size {column size must above 58}
+if [ ${tsize} -lt 59 ]; then
+  echo -ne "\033[31m\r[*] \033[4;32mTerminal column size above 59 \033[1;33m$(stty size) \033[4;32mrow column \e[0m\n"
+  exit 1
 fi
-while [ $ozsh = 0 ];
-do
-	echo -e "\e[1;34m[*] \e[32mOh-my-zsh new setup....\e[0m";
-	echo "";
-
-	( rm -rf ~/.zshrc;git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh;cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc";termux-wake-unlock; ) &> /dev/null & spin;
-	chsh -s zsh;
-if [ -d $HOME/.oh-my-zsh ];
-then
-	ozsh=1
-else
-	echo -e "\e[1;34m[*] \e[32mdownload fail no.2..i ll try again..\e[0m";
-
+# packages list must above 2000
+if [ ${pkgsize} -lt 2000 ]; then
+  echo -ne "\033[31m\r[*] \033[4;32mPackage Update and Upgrade or change repo \e[0m\n"
+  exit 1
 fi
-done
 
-echo -e "\e[1;34m[*] \e[32mZsh-autosuggestion plugins setup..\e[0m";
-
-zshau=0
-(rm -rf ~/.plugins) &> /dev/null
-
-mkdir -p ~/.plugins/zsh-autosuggestions
-mkdir -p ~/.plugins/zsh-syntax-highlighting
-#cd $HOME/.plugins/
-
-while [ $zshau = 0 ];
-do
-	( git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.plugins/zsh-autosuggestions; echo "source ~/.plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
-	if [ -d $HOME/.plugins/zsh-autosuggestions ];
-then
-	zshau=1
-
-else
-
-echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
-
-fi
-done
-zshsyx=0
-
-#cd $HOME/.plugins/
-
-while [ $zshsyx = 0 ];
-do
-echo -e "\e[1;34m[*] \e[32mZsh-syntax-highlighter setup....\e[0m";
-	( git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.plugins/zsh-syntax-highlighting; echo "source ~/.plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.zshrc; ) &> /dev/null & spin
-
-if [ -d $HOME/.plugins/zsh-syntax-highlighting ];then
-	zshsyx=1
-else
-	echo -e "\e[1;34m[*] \e[32mdownload fail..i ll try again..\e[0m";
-
-fi
-done
-
-
-
-
-	THEADER
-	
-	
-else
-	echo -e "\e[1;34m[*] \033[32mHope you like my work..\033[0m"
-	exit
-fi
-exit 0
+# Run main menu
+menu_main

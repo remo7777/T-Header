@@ -1,0 +1,152 @@
+
+user="$(mktemp)"
+figftemp="$(mktemp)"
+logotemp="$(mktemp)"
+VAR4=$(echo $(($(stty size | cut -d ' ' -f 2) - 17)))
+PUT() { echo -en "\033[${1};${2}H"; }
+DRAW() {
+    echo -en "\033%"
+    echo -en "\033(0"
+}
+WRITE() { echo -en "\033(B"; }
+HIDECURSOR() { echo -en "\033[?25l"; }
+NORM() { echo -en "\033[?12l\033[?25h"; }
+
+base64 -d >"$logotemp" <<'EOF'
+G1s/MjVsG1s0OW0gIBtbMzg7MjsyNTI7ODk7MTUwbeKWhCAbWzM4OzI7MjUxOzE5OzEwMDs0ODsy
+OzI1MTsyMDsxMDJt4paWG1szODsyOzI1MTsyMDsxMDI7NDlt4paEG1szODsyOzI1MTsyMDsxMDA7
+NDlt4paEICAbWzM4OzI7MjUxOzE5OzEwMjs0ODsyOzI1MTsyMDsxMDJt4paWG1szODsyOzI1MTsy
+MDsxMDI7NDlt4paMICAgICAbWzBtChtbNDltICAbWzM4OzI7MjUyOzkwOzE0OW3iloAbWzM4OzI7
+MjUxOzE5OzEwMm3iloQbWzM4OzI7MjUyOzE5OzEwMTs0ODsyOzI1MTsyMDsxMDFt4paYG1szODsy
+OzI1MTsxODsxMDQ7NDg7MjsyNTE7MjA7MTAybeKWlxtbMzg7MjsyNTE7MTk7MTAyOzQ5beKWgBtb
+Mzg7MjsyNTE7MjA7MTAybeKWhCAbWzM4OzI7MjUxOzIwOzEwMm3iloQbWzM4OzI7MjQ1OzE5Ozk5
+OzQ5beKWhBtbMzg7MjsyMjg7MTY7OTA7NDg7MjsyMjQ7MTY7ODht4paaG1s0OW0gICAgG1swbQob
+WzQ5bSAgG1szODsyOzI1MTsxNjs5OG3iloQbWzQ4OzI7MjUxOzIwOzEwMm0gG1s0ODsyOzI1MTsy
+MDsxMDJtIBtbNDg7MjsyNTE7MjA7MTAybSAbWzQ4OzI7MjUxOzIwOzEwMm0gG1s0ODsyOzI1MTsy
+MDsxMDJtIBtbMzg7MjswOzA7MDs0ODsyOzI1MTsyMDsxMDJt4padG1szODsyOzI1MjsxOTsxMDI7
+NDg7MjsyNTE7MjA7MTAxbeKWlhtbMzg7MjsyMzQ7MTc7OTM7NDg7MjsyMjQ7MTY7ODht4paMG1s0
+OW0gG1s0OW0gG1szODsyOzIzMTsxMjs4Mm3iloQgIBtbMG0KG1s0OW0gG1szODsyOzE3NzsxMzs3
+MG3iloAbWzM4OzI7MjUxOzIwOzEwMjs0ODsyOzI1MTsyMDsxMDFt4paaG1s0ODsyOzI1MTsyMDsx
+MDJtIBtbMzg7MjsyNTA7MzM7MTExOzQ4OzI7MjUxOzIwOzEwMm3ilpcbWzM4OzI7MjQ4OzEzMDsx
+NzM7NDg7MjsyNTE7NTc7MTIzbeKWhBtbMzg7MjsyNDM7MjIzOzIzMjs0ODsyOzI1MDs4NDsxNDJt
+4paXG1szODsyOzI0MjsyMzk7MjQyOzQ4OzI7MjQ5OzcyOzEzNW3iloQbWzM4OzI7MjQxOzIzODsy
+NDE7NDg7MjsyNDc7NTg7MTI1beKWhBtbMzg7MjsyMzQ7MjAwOzIxNDs0ODsyOzI1MTsyMjsxMDNt
+4paEG1szODsyOzI0MTs5NzsxNDk7NDg7MjsyNDg7MjA7MTAxbeKWlhtbMzg7MjsyNDk7MjA7MTAx
+OzQ4OzI7MjI3OzE2Ozg5beKWlhtbMzg7MjsyMjc7MTY7ODg7NDlt4paEG1szODsyOzIyNDsxNjs4
+ODs0OW3iloAbWzM4OzI7MTU4OzExOzYyOzQ5beKWgBtbNDltIBtbMG0KG1s0OW0gG1szODsyOzE3
+NzsxNDs3Mm3iloQbWzQ4OzI7MjUxOzIwOzEwMm0gG1szODsyOzI1MTsyMTsxMDI7NDg7MjsyNTE7
+MjA7MTAybeKWlxtbMzg7MjsyNDk7NTc7MTI2OzQ4OzI7MjQzOzIxODsyMjht4paYG1szODsyOzI0
+NjsxMzc7MTc0OzQ4OzI7MjQyOzIzOTsyNDJt4paEG1szODsyOzI0NzsxMDk7MTU3beKWhCAbWzM4
+OzI7MjQ3OzEwOTsxNTk7NDg7MjsyNDI7MjM0OzIzOW3ilpcbWzM4OzI7MjQ4Ozg2OzE0NDs0ODsy
+OzI0MTsyMzg7MjQxbeKWhBtbMzg7MjsyMjY7MjIyOzIyNjs0ODsyOzIzNTsxODc7MjA2beKWmhtb
+Mzg7MjsyMzY7MTM4OzE3NDs0ODsyOzI0ODsyMzsxMDNt4paWG1szODsyOzIyNDsxNjs4ODs0ODsy
+OzI0MjsxODs5NW3ilpgbWzM4OzI7MjI5OzE2OzkxOzQ4OzI7MjI0OzE2Ozg4beKWmBtbNDltIBtb
+NDltIBtbMG0KG1s0OW0gIBtbMzg7MjswOzA7MDs0ODsyOzI1MTsyMDsxMDFt4paWG1szODsyOzI1
+MTsyMDsxMDI7NDg7MjsyNTA7NTQ7MTI0beKWjBtbMzg7MjsyNDI7MjM4OzI0Mjs0ODsyOzI0Mjsy
+Mzk7MjQybeKWlhtbMzg7MjsyNDI7MjIxOzIzMDs0ODsyOzI1MDs1NDsxMjBt4paEG1szODsyOzI0
+MjsyMjM7MjMxOzQ4OzI7MjUwOzQ3OzExNm3iloQbWzM4OzI7MjQ3OzExMDsxNTc7NDg7MjsyNDI7
+MjM4OzI0MW3iloQbWzM4OzI7MjUwOzM4OzExMzs0ODsyOzI0MzsyMDk7MjIybeKWnRtbMzg7Mjsy
+NDM7MjA2OzIyMTs0ODsyOzI1MTsyMDsxMDJt4paEG1szODsyOzI0NjsxMzE7MTczOzQ4OzI7MjMx
+OzIyNzsyMzFt4paYG1szODsyOzIyNzsyMDU7MjE1OzQ4OzI7MjUxOzIwOzEwMm3ilowbWzM4OzI7
+MjM3OzE4Ozk1OzQ4OzI7MjI1OzE2Ozg4beKWmBtbMzg7MjsyMjY7MTY7ODk7NDlt4paAG1s0OW0g
+IBtbMG0KG1s0OW0gIBtbMzg7MjsyNTE7MTk7MTAzOzQ4OzI7MjUxOzIwOzEwMm3ilpgbWzQ4OzI7
+MjUxOzIwOzEwMm0gG1szODsyOzI0NTsxNzg7MjAzOzQ4OzI7MjUwOzU1OzExOG3ilp0bWzM4OzI7
+MjUxOzI4OzEwNzs0ODsyOzI0MjsyMjI7MjMxbeKWlhtbMzg7MjsyNDg7ODM7MTQyOzQ4OzI7MjQy
+OzIzMjsyMzdt4paXG1szODsyOzI0NDsxOTk7MjE2OzQ4OzI7MjQyOzIzNDsyMzlt4paWG1szODsy
+OzI0NTsxMzM7MTczOzQ4OzI7MjQyOzIzODsyNDFt4paEG1szODsyOzIzNDsxNTA7MTgyOzQ4OzI7
+MjMzOzIyOTsyMzJt4paXG1szODsyOzI0NjsyMDs5OTs0ODsyOzIzMzsxODA7MjAwbeKWhBtbMzg7
+MjsyMjY7MTY7ODk7NDg7MjsyNDc7NTA7MTE3beKWhBtbMzg7MjsyMjU7MTY7ODg7NDlt4paAG1s0
+OW0gG1s0OW0gIBtbMG0KG1s0OW0gIBtbMzg7MjsyNTE7MTk7MTAzbeKWgBtbMzg7MjsyNTE7MjA7
+MTAybeKWgBtbNDg7MjsyNTE7MjA7MTAybSAbWzM4OzI7MjUxOzIyOzEwMzs0ODsyOzI1MTsyMDsx
+MDJt4padG1s0ODsyOzI1MTsyMDsxMDJt4paYG1szODsyOzI0ODs4MjsxNDE7NDg7MjsyNTA7MzM7
+MTA4beKWnRtbMzg7MjsyNTA7MzU7MTExOzQ4OzI7MjUxOzIwOzEwMm3ilpgbWzM4OzI7MjQ0OzE5
+Ozk4OzQ4OzI7MjUwOzIxOzEwMm3ilpcbWzM4OzI7MjMyOzE3OzkyOzQ4OzI7MjUwOzIwOzEwMW3i
+loQbWzM4OzI7MjMxOzE2Ozg5OzQ4OzI7MjI0OzE2Ozg4beKWmhtbMzg7MjsxNTk7MTE7NjI7NDlt
+4paAICAgG1swbQo=
+EOF
+base64 -d >"$figftemp" <<'EOF'
+G1szODsyOzIzNzsxMjk7MTdt4paAG1szOW0bWzM4OzI7MjM5OzEyNTsxOW3ilogbWzM5bRtbMzg7
+MjsyNDE7MTIxOzIxbeKWgBtbMzltG1szODsyOzI0MzsxMTc7MjNt4oCBG1szOW0bWzM4OzI7MjQ0
+OzExMjsyNm3iloQbWzM5bRtbMzg7MjsyNDY7MTA4OzI4beKWhBtbMzltG1szODsyOzI0NzsxMDQ7
+MzFt4oCBG1szOW0bWzM4OzI7MjQ5OzEwMDszNG3ilogbWzM5bRtbMzg7MjsyNTA7OTY7MzdtIBtb
+MzltG1szODsyOzI1MTs5Mjs0MG3ilogbWzM5bRtbMzg7MjsyNTI7ODg7NDNt4oCBG1szOW0bWzM4
+OzI7MjUzOzg0OzQ2beKWiBtbMzltG1szODsyOzI1Mzs4MDs1MG3iloAbWzM5bRtbMzg7MjsyNTQ7
+NzY7NTNt4paAG1szOW0bWzM4OzI7MjU0OzcyOzU2beKAgRtbMzltG1szODsyOzI1NDs2ODs2MG3i
+loQbWzM5bRtbMzg7MjsyNTQ7NjQ7NjRt4paAG1szOW0bWzM4OzI7MjU0OzYxOzY3beKWiBtbMzlt
+G1szODsyOzI1NDs1Nzs3MW3igIEbWzM5bRtbMzg7MjsyNTQ7NTQ7NzVt4paIG1szOW0bWzM4OzI7
+MjUzOzUwOzc5beKWgBtbMzltG1szODsyOzI1Mzs0Nzs4M23iloQbWzM5bRtbMzg7MjsyNTI7NDQ7
+ODdt4oCBG1szOW0bWzM4OzI7MjUxOzQxOzkxbeKWiBtbMzltG1szODsyOzI1MDszODs5NW3iloAb
+WzM5bRtbMzg7MjsyNDk7MzU7OTlt4paAG1szOW0bWzM4OzI7MjQ4OzMyOzEwM23igIEbWzM5bRtb
+Mzg7MjsyNDY7Mjk7MTA3beKWiBtbMzltG1szODsyOzI0NTsyNjsxMTFt4paAG1szOW0bWzM4OzI7
+MjQzOzI0OzExNm3ilogbWzM5bRtbMzg7MjsyNDE7MjI7MTIwbeKAgRtbMzltG1szODsyOzIzOTsx
+OTsxMjRtG1szOW0KG1szODsyOzI0MzsxMTc7MjNtIBtbMzltG1szODsyOzI0NDsxMTI7MjZt4paI
+G1szOW0bWzM4OzI7MjQ2OzEwODsyOG3igIEbWzM5bRtbMzg7MjsyNDc7MTA0OzMxbeKAgRtbMzlt
+G1szODsyOzI0OTsxMDA7MzRt4oCBG1szOW0bWzM4OzI7MjUwOzk2OzM3beKAgRtbMzltG1szODsy
+OzI1MTs5Mjs0MG3igIEbWzM5bRtbMzg7MjsyNTI7ODg7NDNt4paIG1szOW0bWzM4OzI7MjUzOzg0
+OzQ2beKWgBtbMzltG1szODsyOzI1Mzs4MDs1MG3ilogbWzM5bRtbMzg7MjsyNTQ7NzY7NTNt4oCB
+G1szOW0bWzM4OzI7MjU0OzcyOzU2beKWiBtbMzltG1szODsyOzI1NDs2ODs2MG3ilogbWzM5bRtb
+Mzg7MjsyNTQ7NjQ7NjRt4paEG1szOW0bWzM4OzI7MjU0OzYxOzY3beKAgRtbMzltG1szODsyOzI1
+NDs1Nzs3MW3ilogbWzM5bRtbMzg7MjsyNTQ7NTQ7NzVt4paAG1szOW0bWzM4OzI7MjUzOzUwOzc5
+beKWiBtbMzltG1szODsyOzI1Mzs0Nzs4M23igIEbWzM5bRtbMzg7MjsyNTI7NDQ7ODdt4paIG1sz
+OW0bWzM4OzI7MjUxOzQxOzkxbeKWhBtbMzltG1szODsyOzI1MDszODs5NW3iloAbWzM5bRtbMzg7
+MjsyNDk7MzU7OTlt4oCBG1szOW0bWzM4OzI7MjQ4OzMyOzEwM23ilogbWzM5bRtbMzg7MjsyNDY7
+Mjk7MTA3beKWiBtbMzltG1szODsyOzI0NTsyNjsxMTFt4paEG1szOW0bWzM4OzI7MjQzOzI0OzEx
+Nm3igIEbWzM5bRtbMzg7MjsyNDE7MjI7MTIwbeKWiBtbMzltG1szODsyOzIzOTsxOTsxMjRt4paA
+G1szOW0bWzM4OzI7MjM3OzE3OzEyOG3iloQbWzM5bRtbMzg7MjsyMzU7MTU7MTMybeKAgRtbMzlt
+G1szODsyOzIzMzsxMzsxMzdtG1szOW0K
+EOF
+print_center_file() {
+    local file="$1"
+    local content
+    if [[ -f "$file" ]]; then
+        content=$(sed "s/\x1B\[[^0-9;]*[mGK]//g" "$file")
+    else
+        echo "Error: File '$file' not found."
+        return 1
+    fi
+    local prefix="   " # 3 spaces
+    while IFS= read -r line; do
+        printf "%s%s\n" "$prefix" "$line"
+    done <<<"$content"
+}
+
+print_prefixed_file() {
+    local file="$1"
+    local content
+    if [[ -f "$file" ]]; then
+        content=$(sed "s/\x1B\[[^0-9;]*[mGK]//g" "$file")
+    else
+        echo "Error: File '$file' not found."
+        return 1
+    fi
+    local prefix="                        " # 15 spaces
+    while IFS= read -r line; do
+        printf "%s%s\n" "$prefix" "$line"
+    done <<<"$content"
+}
+# ${1}=figlet, ${2}=logo
+banner() {
+    HIDECURSOR
+    clear
+    echo -e "\033[35;1m"
+    PUT 0 0
+    echo "┌$(seq -s─ $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')┐"
+    for ((i = 1; i <= 8; i++)); do
+        echo "│$(seq -s\  $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')│"
+    done
+    echo "└$(seq -s─ $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')┘"
+    PUT 5 0
+    print_prefixed_file "${1}"
+    PUT 2 0
+    print_center_file "${2}"
+    PUT 1 0
+    echo -e "\033[35;1m"
+    for ((i = 1; i <= 8; i++)); do
+        echo "│"
+    done
+    PUT 9 ${VAR4}
+    echo -e "\e[32mSetup Script \e[33m3.0\e[0m"
+    PUT 10 0
+    echo
+    NORM
+}

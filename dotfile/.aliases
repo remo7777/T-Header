@@ -1,0 +1,37 @@
+# =========[  logo-ls and eza aliases Setup ]=========
+
+if [ -n "$(command -v eza)" ]; then
+    # echo "eza detected. Setting up eza aliases."
+    alias l='logo-ls'
+    alias ls='eza'
+    alias l.='eza -d .*'
+    alias la='eza -a'
+    alias ll='eza -hl --icons=auto --color=auto --classify=auto'
+    alias ll.='eza -hl --classify=auto -d .*'
+else
+    # echo "eza not found. Using default ls aliases."
+    alias l='ls'
+    alias ls='ls --color=auto'
+    alias l.='ls --color=auto -d .*'
+    alias la='ls --color=auto -a'
+    alias ll='ls --color=auto -Fhl'
+    alias ll.='ls --color=auto -Fhl -d .*'
+fi
+
+# =========[  Replace cat with bat Setup ]=========
+if [ -n "$(command -v bat)" ]; then
+        alias cat='bat --decorations=never --paging=never'
+fi
+
+## Safety.
+alias history='history -a'
+alias cp='cp -i'
+alias ln='ln -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+
+# =========[  Neovim Text Editor ]=========
+if [ -n "$(command -v nvim)" ]; then
+        alias nv='nvim'
+fi

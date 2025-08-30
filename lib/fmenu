@@ -1,0 +1,241 @@
+#!/bin/bash
+
+confi() {
+  export FZF_DEFAULT_OPTS=""
+  export FZF_DEFAULT_OPTS="--height=40% \
+          --color fg:#ffffff,bg:#222222,hl:#98c379,fg+:#ffffff,bg+:#222222,hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 \
+          --ansi --reverse --no-info --no-scrollbar \
+          --pointer=' '"
+}
+
+function type_title() {
+
+  confi
+  FONT="${1:-pixelfont}"
+  CONFIG="$HOME/.config/theader/theader.cfg"
+
+  mkdir -p "$(dirname "$CONFIG")"
+  touch "$CONFIG"
+
+  # preview command for fzf (live figlet render)
+  PREVIEW='
+    q="{q}"
+    [[ -z "$q" ]] && q=" "
+    w=$(( $(tput cols) + 17 ))
+    if command -v lolcat >/dev/null 2>&1; then
+        figlet -f '"$FONT"' -t -w "$w" "$q" | lolcat -f
+    else
+        figlet -f '"$FONT"' -t -w "$w" "$q"
+    fi
+    '
+
+  result="$(
+    printf '\n' | fzf \
+      --prompt="Type title ▶ " --exit-0 \
+      --query="$(grep "^title=" "$CONFIG" | cut -d'=' -f2- || echo "tyro 2.0")" \
+      --print-query \
+      --border --margin 1,5% --preview "$PREVIEW" \
+      --preview-window=down:70%:wrap \
+      --phony
+  )"
+
+  # first line is user query (because of --print-query)
+  title="${result%%$'\n'*}"
+
+  # update config file (remove old title= line if present)
+  sed -i "s/^title=.*/title=$title/" "$CONFIG"
+
+  echo -e "\033[32m[✔] Saved title=\"$title\" to $CONFIG\033[0m"
+}
+
+function key_properties() {
+
+  confi
+  CONFIG="$HOME/.config/theader/theader.cfg"
+  PROP_DIR="$HOME/.config/theader/tpt"
+  TARGET="$HOME/.termux/termux.properties"
+
+  mkdir -p "$(dirname "$CONFIG")"
+  mkdir -p "$PROP_DIR"
+  touch "$CONFIG"
+
+  # ====== Compute current active hash ======
+  if [[ -f "$TARGET" ]]; then
+    current_hash=$(sha256sum "$TARGET" | awk '{print $1}')
+  else
+    current_hash=""
+  fi
+
+  # ✅ Green nerd font check mark
+  green_star=$'\033[32m\033[0m'
+
+  # ====== Collect available configs ======
+  options=()
+  i=1
+  while IFS= read -r file; do
+    filename=$(basename "$file")
+    file_hash=$(sha256sum "$file" | awk '{print $1}')
+    if [[ "$file_hash" == "$current_hash" ]]; then
+      options+=("$i. $filename $green_star")
+    else
+      options+=("$i. $filename")
+    fi
+    ((i++))
+  done < <(find "$PROP_DIR" -maxdepth 1 -type f | sort)
+
+  # ====== Select with fzf ======
+  choice=$(printf "%s\n" "${options[@]}" |
+    fzf --prompt="Select termux.properties ➤ " --exit-0 \
+      --margin 1,5% --height=40% --border \
+      --ansi --no-info --reverse --no-scrollbar)
+
+  [[ -z "$choice" ]] && echo "No selection made. Exiting." && exit 0
+
+  # Strip number + star → just filename
+  choice_clean="${choice#*. }"
+  choice_clean="${choice_clean%% *}"
+
+  # ====== Update termux.properties ======
+  selected_file="$PROP_DIR/$choice_clean"
+  selected_hash=$(sha256sum "$selected_file" | awk '{print $1}')
+
+  cp "$selected_file" "$TARGET"
+
+  if grep -q '^termux_properties=' "$CONFIG"; then
+    sed -i "s|^termux_properties=.*|termux_properties=$selected_hash|" "$CONFIG"
+  else
+    echo "termux_properties=$selected_hash" >>"$CONFIG"
+  fi
+
+  termux-reload-settings
+
+  echo -e "\033[32m[✔] Updated termux.properties → $choice_clean\033[0m"
+}
+
+function c_logo() {
+
+  confi
+  CONFIG="$HOME/.config/theader/theader.cfg"
+  LOGO_DIR="$HOME/.config/theader/logo"
+  mkdir -p "$(dirname "$CONFIG")"
+  touch "$CONFIG"
+
+  # ====== Read current config ======
+  current_logo=$(grep '^logo=' "$CONFIG" | cut -d'=' -f2)
+  current_indent=$(grep '^indent=' "$CONFIG" | cut -d'=' -f2)
+  [[ -z "$current_indent" ]] && current_indent=2
+
+  # ✅ Green nerd font check mark
+  green_star=$'\033[32m\033[0m'
+
+  # ====== Logo Selection ======
+  options=()
+  i=1
+  while IFS= read -r file; do
+    filename=$(basename "$file")
+    if [[ "$filename" == "$current_logo" ]]; then
+      options+=("$i. $filename $green_star")
+    else
+      options+=("$i. $filename")
+    fi
+    ((i++))
+  done < <(find "$LOGO_DIR" -maxdepth 1 -type f | sort)
+
+  choice=$(printf "%s\n" "${options[@]}" |
+    fzf --prompt="Select Logo ➤ " --exit-0 \
+      --margin 1,5% --height=20% --border \
+      --preview='FILE={}; FILE=${FILE#*. }; FILE=${FILE%% *}; cat "'"$LOGO_DIR"'/$FILE"' \
+      --preview-window=right:40%:wrap \
+      --ansi --no-info --reverse --no-scrollbar)
+
+  [[ -z "$choice" ]] && echo "No selection made. Exiting." && exit 0
+
+  # Strip off numbering + star
+  choice_clean="${choice#*. }"
+  choice_clean="${choice_clean%% *}"
+
+  # ====== Indent Selection (same style) ======
+  indent_opts=(2 3 4 5 6)
+  indent_choices=()
+  for val in "${indent_opts[@]}"; do
+    if [[ "$val" == "$current_indent" ]]; then
+      indent_choices+=("$val $green_star")
+    else
+      indent_choices+=("$val")
+    fi
+  done
+
+  indent_choice=$(printf "%s\n" "${indent_choices[@]}" |
+    fzf --prompt="Select Indent ➤ " --exit-0 \
+      --margin 1,5% --height=20% --border \
+      --ansi --no-info --reverse --no-scrollbar)
+
+  [[ -z "$indent_choice" ]] && indent_choice=$current_indent || indent_choice="${indent_choice%% *}"
+
+  # ====== Update config ======
+  if grep -q '^logo=' "$CONFIG"; then
+    sed -i "s|^logo=.*|logo=$choice_clean|" "$CONFIG"
+  else
+    echo "logo=$choice_clean" >>"$CONFIG"
+  fi
+
+  if grep -q '^indent=' "$CONFIG"; then
+    sed -i "s|^indent=.*|indent=$indent_choice|" "$CONFIG"
+  else
+    echo "indent=$indent_choice" >>"$CONFIG"
+  fi
+
+  echo -e "\033[32m[✔] Updated logo=$choice_clean, indent=$indent_choice\033[0m"
+}
+# ====== Change current theme from .zshrc ====== #
+function c_theme() {
+  confi
+  ZSHRC="$HOME/.zshrc"
+  ZSH="$HOME/.oh-my-zsh"
+  ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
+
+  # ====== Get current theme from .zshrc ======
+  current_theme=$(grep '^ZSH_THEME=' "$ZSHRC" | cut -d'"' -f2)
+
+  # ✅ Green nerd font star
+  green_star=$'\033[32m\033[0m'
+
+  # ====== Collect themes ======
+  mapfile -t themes < <(
+    find "$ZSH/themes" "$ZSH_CUSTOM/themes" -maxdepth 1 -type f -name "*.zsh-theme" 2>/dev/null |
+      sort | while read -r file; do basename "$file" .zsh-theme; done
+  )
+
+  options=()
+  i=1
+  for theme in "${themes[@]}"; do
+    if [[ "$theme" == "$current_theme" ]]; then
+      options+=("$i. $theme $green_star")
+    else
+      options+=("$i. $theme")
+    fi
+    ((i++))
+  done
+
+  # ====== Theme Selection ======
+  choice=$(printf "%s\n" "${options[@]}" |
+    fzf --prompt="Select ZSH Theme ➤ " --exit-0 \
+      --margin 1,5% --height=40% --border \
+      --ansi --no-info --reverse --no-scrollbar)
+
+  [[ -z "$choice" ]] && echo "No selection made. Exiting." && return 1
+
+  # Strip numbering and star
+  choice_clean="${choice#*. }"
+  choice_clean="${choice_clean%% *}"
+
+  # ====== Update .zshrc ======
+  if grep -q '^ZSH_THEME=' "$ZSHRC"; then
+    sed -i "s|^ZSH_THEME=.*|ZSH_THEME=\"$choice_clean\"|" "$ZSHRC"
+  else
+    echo "ZSH_THEME=\"$choice_clean\"" >>"$ZSHRC"
+  fi
+
+  echo -e "\033[32m[✔] Updated theme to: $choice_clean\033[0m"
+  echo "Run 'source ~/.zshrc' to apply changes."
+}

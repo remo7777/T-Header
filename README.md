@@ -11,7 +11,7 @@ This Bash script contains Oh-My-Zsh With, command autosuggestion, syntax highlig
 - [x] termux-banner
 - [x] PS1 with custom trim path indicator
 - [x] Custom prompt cursor
-- [ ] other (git prompt)
+- [x] other (git prompt)
 
 ## Termux keyboard features with shortcuts
 

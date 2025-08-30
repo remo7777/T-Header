@@ -1,0 +1,85 @@
+#!/data/data/com.termux/files/usr/bin/env bash
+set -Eeuo pipefail
+
+# === Load library ===
+LIB_PATH="${LIB_PATH:-$HOME/.config/theader/lib/fmenu}"
+if [[ -f "$LIB_PATH" ]]; then
+  . "$LIB_PATH"
+else
+  echo "Error: Library not found at $LIB_PATH" >&2
+  echo "Hint: put your functions (c_logo, type_title, key_properties, c_theme) in: $LIB_PATH" >&2
+  exit 1
+fi
+
+# === Map commands -> functions ===
+declare -A CMD_FUNC=(
+  [clogo]=c_logo
+  [ctitle]=type_title
+  [ctpro]=key_properties
+  [cztheme]=c_theme
+)
+
+run_cmd() {
+  local name="$1"; shift || true
+  local fn="${CMD_FUNC[$name]:-}"
+  if [[ -n "$fn" ]] && declare -F "$fn" >/dev/null; then
+    "$fn" "$@"
+  else
+    echo "Unknown command: $name" >&2
+    echo "Available: ${!CMD_FUNC[*]}" >&2
+    exit 1
+  fi
+}
+
+# === 1) Symlink dispatch (clogo, ctitle, …) ===
+cmd="$(basename "$0")"
+if [[ "$cmd" != "theader" && -n "${CMD_FUNC[$cmd]:-}" ]]; then
+  run_cmd "$cmd" "$@"
+  exit 0
+fi
+
+# === 2) Subcommand syntax: theader <cmd> [args...] ===
+if [[ $# -gt 0 && -n "${CMD_FUNC[$1]:-}" ]]; then
+  sub="$1"; shift
+  run_cmd "$sub" "$@"
+  exit 0
+fi
+
+# === 3) Interactive menu with gum ===
+if command -v gum >/dev/null 2>&1; then
+  CURSOR="${GUM_CURSOR:- }"
+
+  # Terminal width (default to stty if $COLUMNS missing)
+  : "${COLUMNS:=$(stty size | awk '{print $2}')}"
+  sep=$(printf '─%.0s' $(seq 1 "$COLUMNS"))
+
+  # Dracula colors
+  HEADER_COLOR="#bd93f9"    # purple
+  SEPARATOR_COLOR="#6272a4" # gray/comment
+
+  # Nerd Font icons
+  ICON_LOGO="󰝘"      # logo/art
+  ICON_TITLE="󰈔"     # title/text
+  ICON_PROP="󰒓"     # config/properties
+  ICON_THEME="󰏘"    # theme/appearance
+
+  # Header + separator
+  gum style --foreground="$HEADER_COLOR" --align=center --border=none \
+    "theader • choose a command"
+  gum style --foreground="$SEPARATOR_COLOR" --border=none "$sep"
+
+  # Menu with icons
+  choice="$(gum choose \
+    "clogo  $ICON_LOGO   — Change logo" \
+    "ctitle $ICON_TITLE  — Type header/title" \
+    "ctpro  $ICON_PROP   — Change termux.properties" \
+    "cztheme $ICON_THEME — Change ZSH theme" \
+    --cursor="$CURSOR")"
+
+  [[ -z "${choice:-}" ]] && exit 0
+  choice_cmd="${choice%% *}"
+  run_cmd "$choice_cmd"
+else
+  echo "gum not installed. Usage: theader [clogo|ctitle|ctpro|cztheme]" >&2
+  exit 1
+fi

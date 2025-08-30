@@ -1,0 +1,65 @@
+
+# progress() {
+#
+#     local pid=$!
+#     local delay=0.25
+#     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+#
+#         for i in "$(if test -e ${PWd}/${1}.iso; then cd ${PWd}/;du -h ${1}.iso | awk '{print $1}';else echo -e "\e[94m  \e[0m";fi)"
+#         do
+#             tput civis
+#             echo -ne "\033[34m\r[*] Downloading \e[1;33m${1}\e[34m	: \e[33m[\033[36m\033[32m$i\033[33m]\033[0m   ";
+#             sleep $delay
+#             printf "\b\b\b\b\b\b\b\b";
+#         done
+#     done
+#     printf "   \b\b\b\b"
+#     tput cnorm
+#     printf "\e[32m [\e[32m Done \e[32m]\e[0m";
+#     echo "";
+# }
+
+spin22() {
+    HIDECURSOR() { echo -en "\033[?25l"; }
+    NORM() { echo -en "\033[?12l\033[?25h"; }
+    local pid=$!
+    local delay=0.25
+    local spinner=('█■■■■' '■█■■■' '■■█■■' '■■■█■' '■■■■█')
+
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+
+        for i in "${spinner[@]}"; do
+            HIDECURSOR
+            echo -ne "\033[34m\r[*] "${3}" \e[1;33m${1}\e[34m 	: \e[33m[\033[32m$i\033[33m]\033[0m   "
+            sleep $delay
+            printf "\b\b\b\b\b\b\b\b"
+        done
+    done
+    printf "   \b\b\b\b\b\b"
+    NORM
+    printf "\e[32m [ ${2}]\e[0m"
+    echo ""
+}
+
+check_internet() {
+
+    echo -ne "\033[33m\r[*] \033[4;32mChecking Your Internet Connection... \e[0m"
+    (ping -c 3 google.com) &>/dev/null 2>&1
+    if [[ "$?" != 0 ]]; then
+        echo -ne "\033[31m\r[*] \033[4;32mPlease Check Your Internet Connection... \e[0m"
+        sleep 1
+        exit 0
+    fi
+}
+
+#install_package() {
+#    # () &> /dev/null & spin22 "Packages" " \bDone " "Installing"
+#    if [[ $(uname -m) == "aarch64" ]]; then
+#        (apt install root-repo && apt update && yes | apt install docker qemu-system-x86-64-headless qemu-common qemu-utils wget curl figlet openssh coreutils termux-api) &>/dev/null &
+#        spin22 "Packages" " \bDone " "Installing"
+#    else
+#        (apt install root-repo && apt update && yes | apt install docker qemu-system-arm-headless qemu-common qemu-utils wget curl figlet openssh coreutils termux-api) &>/dev/null &
+#        spin22 "Packages" " \bDone " "Installing"
+#    fi
+#
+#}
