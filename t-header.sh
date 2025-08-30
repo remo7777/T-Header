@@ -35,7 +35,7 @@ conf() {
 
 install_packages() {
   # package list
-  packages=(curl fd figlet ruby boxes gum bat logo-ls zsh)
+  packages=(curl fd figlet ruby boxes gum bat logo-ls eza zsh)
 
   echo -e "\n[🔧] Installing required packages...\n"
 
@@ -73,7 +73,23 @@ install_packages() {
     echo "[✔] pixelfont.flf already exists"
   fi
 
-  # Demo text with lolcat if available
+  # Install Nerd Font (UbuntuMono Nerd Font)
+  nerdflink="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/UbuntuMono.zip"
+  FONT_DIR="$HOME/.termux"
+  mkdir -p "$FONT_DIR"
+  TMPDIR=$(mktemp -d)
+
+  echo "[➕] Downloading Nerd Font (UbuntuMono)..."
+  curl -L "$nerdflink" -o "$TMPDIR/UbuntuMono.zip"
+
+  echo "[🎨] Installing Nerd Font to $FONT_DIR/font.ttf ..."
+  unzip -p "$TMPDIR/UbuntuMono.zip" "UbuntuMonoNerdFontMono-Regular.ttf" > "$FONT_DIR/font.ttf"
+
+  rm -rf "$TMPDIR"
+
+  echo "[✔] Nerd Font installed at $FONT_DIR/font.ttf"
+  echo "[ℹ] Restart Termux app to apply new font."# Demo text with lolcat if available
+  termux-reload-settings
   echo -e "\n[🎨] Demo text:\n"
   if command -v lolcat >/dev/null 2>&1; then
     echo "lolcat Installed!" | figlet -f pixelfont | lolcat
