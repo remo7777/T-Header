@@ -339,6 +339,13 @@ if [ ${pkgsize} -lt 2000 ]; then
   echo -ne "\033[31m\r[*] \033[4;32mPackage Update and Upgrade or change repo \e[0m\n"
   exit 1
 fi
+# ✅ Check fzf installed or not
+if ! command -v fzf >/dev/null 2>&1; then
+  echo -e "\033[31m\r[*] \033[4;32mfzf command not found!\033[0m"
+  echo -e "\033[1;33mPlease install fzf:\033[0m pkg install fzf -y\n"
+  exit 1
+fi
+
 
 # Run main menu
 menu_main
