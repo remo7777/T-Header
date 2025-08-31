@@ -44,6 +44,19 @@ This script will:
 - Apply custom fonts and themes
 - Configure `.zshrc`, `.profile`, and `.aliases`
 
+## 🛠️ Troubleshooting
+
+**Termux Force Close Issue**  
+If you're experiencing Termux force closing after installing T-Header:
+
+> 🔧 **Fix**:  
+Navigate to the project root directory and run:
+```bash
+git pull
+bash t-header.sh
+```
+This will update the files and re-run the setup to resolve any compatibility issues.
+
 ## 🧭 Usage
 
 After installation, use the following commands:
