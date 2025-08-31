@@ -96,7 +96,7 @@ install_packages() {
     echo "lolcat not Installed!" | figlet -f pixelfont
   fi
   chsh -s zsh
-  termux-reload-settings
+  # termux-reload-settings
 }
 
 # Run function
