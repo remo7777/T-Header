@@ -89,7 +89,6 @@ install_packages() {
 
   echo "[✔] Nerd Font installed at $FONT_DIR/font.ttf"
   echo "[ℹ] Restart Termux app to apply new font."# Demo text with lolcat if available
-  termux-reload-settings
   echo -e "\n[🎨] Demo text:\n"
   if command -v lolcat >/dev/null 2>&1; then
     echo "lolcat Installed!" | figlet -f pixelfont | lolcat
@@ -97,6 +96,7 @@ install_packages() {
     echo "lolcat not Installed!" | figlet -f pixelfont
   fi
   chsh -s zsh
+  termux-reload-settings
 }
 
 # Run function
