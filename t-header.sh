@@ -318,6 +318,9 @@ setup_theader() {
       echo "Warning: missing $SCRIPT_DIR/$d"
     fi
   done
+  if [[ -f $SCRIPT_DIR/colors.properties ]]; then
+    cp -r $SCRIPT_DIR/colors.properties $HOME/.termux/
+  fi
   if [[ -f $theader_dir/bin/theader ]]; then
     install -Dm700 $theader_dir/bin/theader "$PREFIX"/bin/theader
     for i in clogo ctitle ctpro cztheme; do
