@@ -85,6 +85,11 @@ figlet -f pixelfont "T-Header" | lolcat
 
 You can edit these manually or use the interactive menu.
 
+### Widgets (ZSH)
+- `Alt+T`: Insert file path
+- `Alt+C`: Change directory
+- `Ctrl+R`: Search history
+
 ## 🧼 Uninstall
 
 ```bash
