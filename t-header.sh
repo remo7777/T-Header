@@ -278,15 +278,15 @@ setup_theader() {
   if [ -f "$ZSHRC" ]; then
     # line count check
     line_count=$(wc -l <"$ZSHRC")
+    line_104=$(sed -n '104p' "$ZSHRC")
 
-    if [ "$line_count" -gt 104 ]; then
-      echo "⚠️  .zshrc has $line_count lines, creating backup..."
+    if [ "$line_count" -gt 104 ] && [[ "$line_104" != *"oh-my-zsh"* ]]; then
+      echo "⚠️  .zshrc has $line_count lines and line 104 lacks 'oh-my-zsh', creating backup..."
       cp "$ZSHRC" "$ZSHRC.backup.$(date +%Y%m%d%H%M%S)"
 
       # plugins line extract
       old_plugins=$(grep "^plugins=" "$ZSHRC" | head -n1)
 
-      # plugins line
       if [ -n "$old_plugins" ]; then
         echo "🔗 Found old plugins: $old_plugins"
 
@@ -301,17 +301,18 @@ setup_theader() {
         cp "$TEMPLATE" "$ZSHRC"
       fi
     else
-      echo ".zshrc has only $line_count lines, no reset needed."
+      echo ".zshrc has $line_count lines or already contains 'oh-my-zsh' at line 104, no reset needed."
     fi
   else
     cp "$TEMPLATE" "$ZSHRC"
     sed -i 's/plugins=(git)/plugins=()/' "$ZSHRC"
     echo "✅ Default .zshrc created"
   fi
+
   create_custom_theme
   cp $SCRIPT_DIR/dotfile/.* $HOME/
-  printf "HISTSIZE=100000\nSAVEHIST=100000\n# profile source\nsource \"\$HOME/.profile\"\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>$HOME/.zshrc
-  mkdir -p $theader_dir
+  printf "HISTSIZE=100000\nSAVEHIST=100000\n# profile source\nsource \"\$HOME/.profile\"\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>"$HOME/.zshrc"
+  mkdir -p "$theader_dir"
   for d in bin logo tpt lib theader.cfg; do
     if [[ -e "$SCRIPT_DIR/$d" ]]; then
       cp -r "$SCRIPT_DIR/$d" "$theader_dir/"
@@ -331,7 +332,6 @@ setup_theader() {
   else
     echo "Error: $theader_dir/bin/theader not found!"
   fi
-
 }
 # checking screen size {column size must above 58}
 if [ ${tsize} -lt 59 ]; then
