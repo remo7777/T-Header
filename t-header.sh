@@ -83,7 +83,7 @@ install_packages() {
   curl -L "$nerdflink" -o "$TMPDIR/UbuntuMono.zip"
 
   echo "[🎨] Installing Nerd Font to $FONT_DIR/font.ttf ..."
-  unzip -p "$TMPDIR/UbuntuMono.zip" "UbuntuMonoNerdFontMono-Regular.ttf" > "$FONT_DIR/font.ttf"
+  unzip -p "$TMPDIR/UbuntuMono.zip" "UbuntuMonoNerdFontMono-Regular.ttf" >"$FONT_DIR/font.ttf"
 
   rm -rf "$TMPDIR"
 
@@ -95,7 +95,7 @@ install_packages() {
   else
     echo "lolcat not Installed!" | figlet -f pixelfont
   fi
-  chsh -s zsh
+  # chsh -s zsh
   # termux-reload-settings
 }
 
@@ -115,7 +115,7 @@ menu_main() {
     case $choice in
       "1. Install packages")
         echo -e "\033[1;32m[✔] Installing packages...\033[0m"
-        install_packages 
+        install_packages
         sleep 1
         ;;
       "2. Setup")
@@ -165,6 +165,7 @@ menu_zsh_setup() {
       "1. Install Oh-my-zsh")
         echo -e "\033[1;32m[✔] Installing Oh-my-zsh...\033[0m"
         install_oh_my_zsh
+        chsh -s zsh
         ;;
     esac
   else
@@ -312,7 +313,7 @@ setup_theader() {
   printf "HISTSIZE=100000\nSAVEHIST=100000\n# profile source\nsource \"\$HOME/.profile\"\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>$HOME/.zshrc
   mkdir -p $theader_dir
   for d in bin logo tpt lib theader.cfg; do
-    if [[ -e "$SCRIPT_DIR/$d" ]]; then 
+    if [[ -e "$SCRIPT_DIR/$d" ]]; then
       cp -r "$SCRIPT_DIR/$d" "$theader_dir/"
     else
       echo "Warning: missing $SCRIPT_DIR/$d"
@@ -348,7 +349,6 @@ if ! command -v fzf >/dev/null 2>&1; then
   echo -e "\033[1;33mPlease install fzf:\033[0m pkg install fzf -y\n"
   exit 1
 fi
-
 
 # Run main menu
 menu_main
