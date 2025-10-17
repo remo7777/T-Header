@@ -1,68 +1,61 @@
+#!/usr/bin/bash
 
+# # Example usage
+# echo "=== FIGLET CENTER ==="
+# align_output "$figftemp" "$term_width" center
+#
+# echo "=== LOGO RIGHT ==="
+# align_output "$figftemp" "$term_width" right
+#
+# echo "=== FIGLET LEFT ==="
+# align_output "$logotemp" "$term_width" left
+# [==================(START)===================]
 user="$(mktemp)"
 figftemp="$(mktemp)"
 logotemp="$(mktemp)"
-VAR4=$(echo $(($(stty size | cut -d ' ' -f 2) - 17)))
+term_width=$(stty size | cut -d ' ' -f 2)
+version="$(mktemp)"
 PUT() { echo -en "\033[${1};${2}H"; }
 DRAW() {
-    echo -en "\033%"
-    echo -en "\033(0"
+  echo -en "\033%"
+  echo -en "\033(0"
 }
 WRITE() { echo -en "\033(B"; }
 HIDECURSOR() { echo -en "\033[?25l"; }
 NORM() { echo -en "\033[?12l\033[?25h"; }
 
 base64 -d >"$logotemp" <<'EOF'
-G1s/MjVsG1s0OW0gIBtbMzg7MjsyNTI7ODk7MTUwbeKWhCAbWzM4OzI7MjUxOzE5OzEwMDs0ODsy
-OzI1MTsyMDsxMDJt4paWG1szODsyOzI1MTsyMDsxMDI7NDlt4paEG1szODsyOzI1MTsyMDsxMDA7
-NDlt4paEICAbWzM4OzI7MjUxOzE5OzEwMjs0ODsyOzI1MTsyMDsxMDJt4paWG1szODsyOzI1MTsy
-MDsxMDI7NDlt4paMICAgICAbWzBtChtbNDltICAbWzM4OzI7MjUyOzkwOzE0OW3iloAbWzM4OzI7
-MjUxOzE5OzEwMm3iloQbWzM4OzI7MjUyOzE5OzEwMTs0ODsyOzI1MTsyMDsxMDFt4paYG1szODsy
-OzI1MTsxODsxMDQ7NDg7MjsyNTE7MjA7MTAybeKWlxtbMzg7MjsyNTE7MTk7MTAyOzQ5beKWgBtb
-Mzg7MjsyNTE7MjA7MTAybeKWhCAbWzM4OzI7MjUxOzIwOzEwMm3iloQbWzM4OzI7MjQ1OzE5Ozk5
-OzQ5beKWhBtbMzg7MjsyMjg7MTY7OTA7NDg7MjsyMjQ7MTY7ODht4paaG1s0OW0gICAgG1swbQob
-WzQ5bSAgG1szODsyOzI1MTsxNjs5OG3iloQbWzQ4OzI7MjUxOzIwOzEwMm0gG1s0ODsyOzI1MTsy
-MDsxMDJtIBtbNDg7MjsyNTE7MjA7MTAybSAbWzQ4OzI7MjUxOzIwOzEwMm0gG1s0ODsyOzI1MTsy
-MDsxMDJtIBtbMzg7MjswOzA7MDs0ODsyOzI1MTsyMDsxMDJt4padG1szODsyOzI1MjsxOTsxMDI7
-NDg7MjsyNTE7MjA7MTAxbeKWlhtbMzg7MjsyMzQ7MTc7OTM7NDg7MjsyMjQ7MTY7ODht4paMG1s0
-OW0gG1s0OW0gG1szODsyOzIzMTsxMjs4Mm3iloQgIBtbMG0KG1s0OW0gG1szODsyOzE3NzsxMzs3
-MG3iloAbWzM4OzI7MjUxOzIwOzEwMjs0ODsyOzI1MTsyMDsxMDFt4paaG1s0ODsyOzI1MTsyMDsx
-MDJtIBtbMzg7MjsyNTA7MzM7MTExOzQ4OzI7MjUxOzIwOzEwMm3ilpcbWzM4OzI7MjQ4OzEzMDsx
-NzM7NDg7MjsyNTE7NTc7MTIzbeKWhBtbMzg7MjsyNDM7MjIzOzIzMjs0ODsyOzI1MDs4NDsxNDJt
-4paXG1szODsyOzI0MjsyMzk7MjQyOzQ4OzI7MjQ5OzcyOzEzNW3iloQbWzM4OzI7MjQxOzIzODsy
-NDE7NDg7MjsyNDc7NTg7MTI1beKWhBtbMzg7MjsyMzQ7MjAwOzIxNDs0ODsyOzI1MTsyMjsxMDNt
-4paEG1szODsyOzI0MTs5NzsxNDk7NDg7MjsyNDg7MjA7MTAxbeKWlhtbMzg7MjsyNDk7MjA7MTAx
-OzQ4OzI7MjI3OzE2Ozg5beKWlhtbMzg7MjsyMjc7MTY7ODg7NDlt4paEG1szODsyOzIyNDsxNjs4
-ODs0OW3iloAbWzM4OzI7MTU4OzExOzYyOzQ5beKWgBtbNDltIBtbMG0KG1s0OW0gG1szODsyOzE3
-NzsxNDs3Mm3iloQbWzQ4OzI7MjUxOzIwOzEwMm0gG1szODsyOzI1MTsyMTsxMDI7NDg7MjsyNTE7
-MjA7MTAybeKWlxtbMzg7MjsyNDk7NTc7MTI2OzQ4OzI7MjQzOzIxODsyMjht4paYG1szODsyOzI0
-NjsxMzc7MTc0OzQ4OzI7MjQyOzIzOTsyNDJt4paEG1szODsyOzI0NzsxMDk7MTU3beKWhCAbWzM4
-OzI7MjQ3OzEwOTsxNTk7NDg7MjsyNDI7MjM0OzIzOW3ilpcbWzM4OzI7MjQ4Ozg2OzE0NDs0ODsy
-OzI0MTsyMzg7MjQxbeKWhBtbMzg7MjsyMjY7MjIyOzIyNjs0ODsyOzIzNTsxODc7MjA2beKWmhtb
-Mzg7MjsyMzY7MTM4OzE3NDs0ODsyOzI0ODsyMzsxMDNt4paWG1szODsyOzIyNDsxNjs4ODs0ODsy
-OzI0MjsxODs5NW3ilpgbWzM4OzI7MjI5OzE2OzkxOzQ4OzI7MjI0OzE2Ozg4beKWmBtbNDltIBtb
-NDltIBtbMG0KG1s0OW0gIBtbMzg7MjswOzA7MDs0ODsyOzI1MTsyMDsxMDFt4paWG1szODsyOzI1
-MTsyMDsxMDI7NDg7MjsyNTA7NTQ7MTI0beKWjBtbMzg7MjsyNDI7MjM4OzI0Mjs0ODsyOzI0Mjsy
-Mzk7MjQybeKWlhtbMzg7MjsyNDI7MjIxOzIzMDs0ODsyOzI1MDs1NDsxMjBt4paEG1szODsyOzI0
-MjsyMjM7MjMxOzQ4OzI7MjUwOzQ3OzExNm3iloQbWzM4OzI7MjQ3OzExMDsxNTc7NDg7MjsyNDI7
-MjM4OzI0MW3iloQbWzM4OzI7MjUwOzM4OzExMzs0ODsyOzI0MzsyMDk7MjIybeKWnRtbMzg7Mjsy
-NDM7MjA2OzIyMTs0ODsyOzI1MTsyMDsxMDJt4paEG1szODsyOzI0NjsxMzE7MTczOzQ4OzI7MjMx
-OzIyNzsyMzFt4paYG1szODsyOzIyNzsyMDU7MjE1OzQ4OzI7MjUxOzIwOzEwMm3ilowbWzM4OzI7
-MjM3OzE4Ozk1OzQ4OzI7MjI1OzE2Ozg4beKWmBtbMzg7MjsyMjY7MTY7ODk7NDlt4paAG1s0OW0g
-IBtbMG0KG1s0OW0gIBtbMzg7MjsyNTE7MTk7MTAzOzQ4OzI7MjUxOzIwOzEwMm3ilpgbWzQ4OzI7
-MjUxOzIwOzEwMm0gG1szODsyOzI0NTsxNzg7MjAzOzQ4OzI7MjUwOzU1OzExOG3ilp0bWzM4OzI7
-MjUxOzI4OzEwNzs0ODsyOzI0MjsyMjI7MjMxbeKWlhtbMzg7MjsyNDg7ODM7MTQyOzQ4OzI7MjQy
-OzIzMjsyMzdt4paXG1szODsyOzI0NDsxOTk7MjE2OzQ4OzI7MjQyOzIzNDsyMzlt4paWG1szODsy
-OzI0NTsxMzM7MTczOzQ4OzI7MjQyOzIzODsyNDFt4paEG1szODsyOzIzNDsxNTA7MTgyOzQ4OzI7
-MjMzOzIyOTsyMzJt4paXG1szODsyOzI0NjsyMDs5OTs0ODsyOzIzMzsxODA7MjAwbeKWhBtbMzg7
-MjsyMjY7MTY7ODk7NDg7MjsyNDc7NTA7MTE3beKWhBtbMzg7MjsyMjU7MTY7ODg7NDlt4paAG1s0
-OW0gG1s0OW0gIBtbMG0KG1s0OW0gIBtbMzg7MjsyNTE7MTk7MTAzbeKWgBtbMzg7MjsyNTE7MjA7
-MTAybeKWgBtbNDg7MjsyNTE7MjA7MTAybSAbWzM4OzI7MjUxOzIyOzEwMzs0ODsyOzI1MTsyMDsx
-MDJt4padG1s0ODsyOzI1MTsyMDsxMDJt4paYG1szODsyOzI0ODs4MjsxNDE7NDg7MjsyNTA7MzM7
-MTA4beKWnRtbMzg7MjsyNTA7MzU7MTExOzQ4OzI7MjUxOzIwOzEwMm3ilpgbWzM4OzI7MjQ0OzE5
-Ozk4OzQ4OzI7MjUwOzIxOzEwMm3ilpcbWzM4OzI7MjMyOzE3OzkyOzQ4OzI7MjUwOzIwOzEwMW3i
-loQbWzM4OzI7MjMxOzE2Ozg5OzQ4OzI7MjI0OzE2Ozg4beKWmhtbMzg7MjsxNTk7MTE7NjI7NDlt
-4paAICAgG1swbQo=
+G1s0OW0gICAgICAgICAgICAgICAgG1swbQobWzQ5bSAgICAbWzM4OzI7MDs0MDsxMTNt4paEG1sz
+ODsyOzA7NDk7MTM2beKWhBtbMzg7MjswOzc1OzIxMDs0ODsyOzA7NDc7MTM0beKWhBtbMzg7Mjsw
+OzM0Ozk2OzQ4OzI7MDs3NjsyMTRt4paMG1szODsyOzA7NjA7MTY5OzQ5beKWhBtbMzg7MjswOzg1
+OzI0MDs0OW3ilowbWzM4OzI7MDszNDs5NDs0ODsyOzA7NzE7MjAwbeKWmBtbMzg7MjswOzQ1OzEy
+Njs0OW3iloQgICAgG1swbQobWzQ5bSAgG1szODsyOzA7Mzc7MTA0beKWhBtbMzg7MjswOzYyOzE3
+Nm3iloQbWzM4OzI7Njs4MzsyMjQ7NDg7MjsyMjE7MjI5OzIzOG3ilowbWzM4OzI7MTY5OzIxNDsy
+MTY7NDg7MjsyMzM7MjM3OzI0NG3ilpYbWzM4OzI7MjU1OzI1NTsyNTU7NDg7MjsyMjI7MjI4OzIz
+OW3iloTiloTiloTiloTiloQbWzM4OzI7MjM3OzI0MDsyNDY7NDg7Mjs3NDsxMTU7MTkzbeKWjBtb
+Mzg7MjswOzc5OzIyMTs0OW3ilowbWzM4OzI7MDs0MzsxMjA7NDlt4paEICAbWzBtChtbNDltICAb
+WzM4OzI7MDsyNDs2OTs0OW3iloQbWzM4OzI7MDszMzs5Mzs0ODsyOzA7NTg7MTYzbeKWjBtbMzg7
+Mjs4OzgzOzIxNzs0ODsyOzIxNzsyMzY7MjM3beKWjBtbMzg7Mjs1NjsxODU7MTkyOzQ4OzI7MjU1
+OzI1NTsyNTVt4paMG1szODsyOzI0MzsyNDU7MjQ5OzQ4OzI7NjQ7MTA3OzE5NG3ilpgbWzM4OzI7
+MzQ7OTI7MTk2OzQ4OzI7MjM0OzIzODsyNDVt4paWG1szODsyOzg7ODM7MjE3OzQ4OzI7OTk7MTMy
+OzE5MW3ilpYbWzM4OzI7NjY7MTEwOzE5Mzs0ODsyOzE3MDsxODY7MjE3beKWhBtbMzg7MjsxNDg7
+MTY5OzIwOTs0ODsyOzI1NTsyNTU7MjU1beKWjBtbMzg7MjsyNTU7MjU1OzI1NTs0ODsyOzkyOzEy
+ODsxOTRt4paMG1szODsyOzA7ODI7MjMxOzQ5beKWjBtbMzg7MjswOzI4OzgwOzQ5beKWhBtbNDlt
+ICAbWzBtChtbNDltICAbWzM4OzI7MDs2OzE2OzQ4OzI7MDs0OTsxMzlt4paMG1szODsyOzA7NTI7
+MTQ0OzQ4OzI7MDs2ODsxOTJt4paMG1szODsyOzg7ODM7MjE3OzQ4OzI7MjE3OzIzNjsyMzdt4paM
+G1szODsyOzU2OzE4NTsxOTI7NDg7MjsyMjc7MjMyOzI0MW3ilowbWzM4OzI7MjU1OzI1NTsyNTU7
+NDg7MjsxNTA7MTcwOzIxMG3iloQbWzQ4OzI7MTMzOzE1ODsyMDRt4paEG1szODsyOzgxOzEyMTsx
+OTM7NDg7MjsyNTU7MjU1OzI1NW3ilpgbWzM4OzI7MTQyOzE2NTsyMDdt4padG1szODsyOzE1NDsx
+NzQ7MjExbeKWmBtbMzg7MjsyNTU7MjU1OzI1NTs0ODsyOzkyOzEyODsxOTRt4paMG1szODsyOzA7
+ODU7MjM4OzQ4OzI7MDs1MjsxNDRt4paMG1szODsyOzA7NTI7MTQ0OzQ5beKWjBtbNDltICAbWzBt
+ChtbNDltICAgG1szODsyOzA7MzA7ODVt4paAG1szODsyOzIzOTsyNDc7MjQ3OzQ4OzI7MjI7ODQ7
+MjA3beKWnRtbMzg7Mjs1NjsxMDU7MTkyOzQ4OzI7MTA3OzE5MzsxOTht4paEG1s0ODsyOzEzOTsy
+MDI7MjA1beKWhOKWhOKWhOKWhBtbNDg7MjsyMjk7MjQxOzI0Mm3iloQbWzM4OzI7MjU1OzI1NTsy
+NTU7NDg7Mjs2MTsxMDU7MTk5beKWmBtbMzg7MjswOzc5OzIyMDs0OW3ilpgbWzQ5bSAbWzQ5bSAg
+G1swbQobWzQ5bSAgICAgG1szODsyOzA7ODg7MjQ4OzQ5beKWnRtbMzg7MjswOzM5OzExMDs0OW3i
+loAbWzM4OzI7MDs0NDsxMjU7NDlt4paAG1szODsyOzA7ODA7MjI1OzQ5beKWmBtbMzg7MjswOzkx
+OzI1NTs0OW3ilp0bWzQ5bSAbWzQ5bSAbWzQ5bSAgICAbWzBtChtbNDltICAgICAgICAgICAgICAg
+IBtbMG0K
 EOF
 base64 -d >"$figftemp" <<'EOF'
 G1szODsyOzIzNzsxMjk7MTdt4paAG1szOW0bWzM4OzI7MjM5OzEyNTsxOW3ilogbWzM5bRtbMzg7
@@ -95,58 +88,63 @@ Nm3igIEbWzM5bRtbMzg7MjsyNDE7MjI7MTIwbeKWiBtbMzltG1szODsyOzIzOTsxOTsxMjRt4paA
 G1szOW0bWzM4OzI7MjM3OzE3OzEyOG3iloQbWzM5bRtbMzg7MjsyMzU7MTU7MTMybeKAgRtbMzlt
 G1szODsyOzIzMzsxMzsxMzdtG1szOW0K
 EOF
-print_center_file() {
-    local file="$1"
-    local content
-    if [[ -f "$file" ]]; then
-        content=$(sed "s/\x1B\[[^0-9;]*[mGK]//g" "$file")
-    else
-        echo "Error: File '$file' not found."
-        return 1
-    fi
-    local prefix="   " # 3 spaces
-    while IFS= read -r line; do
-        printf "%s%s\n" "$prefix" "$line"
-    done <<<"$content"
-}
-
-print_prefixed_file() {
-    local file="$1"
-    local content
-    if [[ -f "$file" ]]; then
-        content=$(sed "s/\x1B\[[^0-9;]*[mGK]//g" "$file")
-    else
-        echo "Error: File '$file' not found."
-        return 1
-    fi
-    local prefix="                        " # 15 spaces
-    while IFS= read -r line; do
-        printf "%s%s\n" "$prefix" "$line"
-    done <<<"$content"
-}
+echo -e "\e[32mSetup Script \e[33m3.0\e[0m" > "$version"
 # ${1}=figlet, ${2}=logo
 banner() {
-    HIDECURSOR
-    clear
-    echo -e "\033[35;1m"
-    PUT 0 0
-    echo "┌$(seq -s─ $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')┐"
-    for ((i = 1; i <= 8; i++)); do
-        echo "│$(seq -s\  $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')│"
-    done
-    echo "└$(seq -s─ $(($(stty size | cut -d ' ' -f 2) - 1)) | tr -d '[:digit:]')┘"
-    PUT 5 0
-    print_prefixed_file "${1}"
+  HIDECURSOR
+  clear
+  echo -e "\033[35;1m"
+  PUT 0 0
+  echo "┌$(seq -s─ $((term_width - 1)) | tr -d '[:digit:]')┐"
+  for ((i = 1; i <= 8; i++)); do
+    echo "│$(seq -s\  $((term_width - 1)) | tr -d '[:digit:]')│"
+  done
+  echo "└$(seq -s─ $((term_width - 1)) | tr -d '[:digit:]')┘"
+  PUT 5 0
+  # print_prefixed_file "${1}"
+  if (( term_width > 59 )); then
+    align_output "$figftemp" "$term_width" right
     PUT 2 0
-    print_center_file "${2}"
-    PUT 1 0
-    echo -e "\033[35;1m"
-    for ((i = 1; i <= 8; i++)); do
-        echo "│"
-    done
-    PUT 9 ${VAR4}
-    echo -e "\e[32mSetup Script \e[33m3.0\e[0m"
-    PUT 10 0
-    echo
-    NORM
+    # print_center_file "${2}"
+    align_output "$logotemp" "$term_width" left
+    PUT 9 0
+    align_output "$version" "$term_width" lvers
+  else
+    align_output "$figftemp" "$term_width" center
+    PUT 9 0
+    align_output "$version" "$term_width" lvers
+  fi
+  PUT 1 0
+  echo -e "\033[35;1m"
+  for ((i = 1; i <= 8; i++)); do
+    echo "│"
+  done
+  PUT 10 0
+  echo
+  NORM
+}
+
+align_output() {
+  local file="$1"   # content file
+  local canvas="$2" # terminal width (stty size)
+  local align="$3"  # 0=left, 1=center, 2=right
+
+  # Internal ANSI stripper
+  strip_ansi() { sed "s/\x1B\[[0-9;]*[mGK]//g"; }
+
+  while IFS= read -r line; do
+    local clean_line=$(echo "$line" | strip_ansi)
+    local line_length=${#clean_line}
+    local pad=0
+
+    case "$align" in
+      center) pad=$(((canvas - line_length) / 2)) ;; # center
+      right) pad=$((canvas - line_length - 7)) ;;    # right
+      lvers) pad=$((canvas - line_length - 3)) ;;
+      *) pad=3 ;; # left
+    esac
+
+    [ $pad -lt 0 ] && pad=0
+    printf "%*s%s\n" "$pad" "" "$line"
+  done <"$file"
 }

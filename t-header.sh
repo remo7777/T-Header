@@ -104,7 +104,7 @@ menu_main() {
 
   while true; do
     conf
-    banner "${figftemp}" "${logotemp}" >>${user}
+    banner > ${user}
     cat "${user}"
     echo ""
     choice=$(
@@ -311,7 +311,8 @@ setup_theader() {
 
   create_custom_theme
   cp $SCRIPT_DIR/dotfile/.* $HOME/
-  printf "HISTSIZE=100000\nSAVEHIST=100000\n# profile source\nsource \"\$HOME/.profile\"\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>"$HOME/.zshrc"
+  printf "HISTSIZE=100000\nSAVEHIST=100000\nexport USER=\$(whoami)\nbanner >> \"\${user}\"\ncat \"\${user}\"" >>"$HOME/.zshrc"
+  printf "\n# profile source\nsource \"\$HOME/.profile\"" >> "$HOME/.zprofile" 
   mkdir -p "$theader_dir"
   for d in bin logo tpt lib theader.cfg; do
     if [[ -e "$SCRIPT_DIR/$d" ]]; then
@@ -333,13 +334,8 @@ setup_theader() {
     echo "Error: $theader_dir/bin/theader not found!"
   fi
 }
-# checking screen size {column size must above 58}
-if [ ${tsize} -lt 59 ]; then
-  echo -ne "\033[31m\r[*] \033[4;32mTerminal column size above 59 \033[1;33m$(stty size) \033[4;32mrow column \e[0m\n"
-  exit 1
-fi
 # packages list must above 2000
-if [ ${pkgsize} -lt 2000 ]; then
+if ((pkgsize < 2000)); then
   echo -ne "\033[31m\r[*] \033[4;32mPackage Update and Upgrade or change repo \e[0m\n"
   exit 1
 fi
