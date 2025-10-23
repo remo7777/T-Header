@@ -3,7 +3,7 @@
 confi() {
   export FZF_DEFAULT_OPTS=""
   export FZF_DEFAULT_OPTS="--height=40% \
-          --color fg:#ffffff,bg:#222222,hl:#98c379,fg+:#ffffff,bg+:#222222,hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 \
+          --color fg:#ffffff,hl:#98c379,fg+:#ffffff,hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 \
           --ansi --reverse --no-info --no-scrollbar \
           --pointer=' '"
 }
@@ -11,150 +11,149 @@ confi() {
 function type_title() {
 
   confi
-  FONT="${1:-pixelfont}"
-  CONFIG="$HOME/.config/theader/theader.cfg"
+  # =====================================================
+  #  THEADER TITLE SETUP SCRIPT
+  #  Live dynamic preview with figlet + optional lolcat
+  # =====================================================
 
+  CONFIG="$HOME/.config/theader/theader.cfg"
   mkdir -p "$(dirname "$CONFIG")"
   touch "$CONFIG"
 
-  # preview command for fzf (live figlet render)
-  PREVIEW='
-    q="{q}"
-    [[ -z "$q" ]] && q=" "
-    w=$(( $(tput cols) + 17 ))
-    if command -v lolcat >/dev/null 2>&1; then
-        figlet -f '"$FONT"' -t -w "$w" "$q" | lolcat -f
-    else
-        figlet -f '"$FONT"' -t -w "$w" "$q"
-    fi
-    '
+  # ====== Current title from config ======
+  current_title=$(grep '^title=' "$CONFIG" | cut -d'=' -f2-)
+  [[ -z "$current_title" ]] && current_title="tyro 2.0"
 
-  result="$(
-    printf '\n' | fzf \
-      --prompt="Type title ▶ " --exit-0 \
-      --query="$(grep "^title=" "$CONFIG" | cut -d'=' -f2- || echo "tyro 2.0")" \
-      --print-query \
-      --border --margin 1,5% --preview "$PREVIEW" \
-      --preview-window=down:70%:wrap \
-      --phony
-  )"
+  # ====== Optional font argument ======
+  FONT="${1:-pixelfont}"
 
-  # first line is user query (because of --print-query)
-  title="${result%%$'\n'*}"
-
-  # update config file (remove old title= line if present)
-  sed -i "s/^title=.*/title=$title/" "$CONFIG"
-
-  echo -e "\033[32m[✔] Saved title=\"$title\" to $CONFIG\033[0m"
-}
-
-function key_properties() {
+  # ====== Check dependencies ======
+  if ! command -v figlet >/dev/null 2>&1; then
+    echo "⚠️ figlet not found. Install it first."
+    exit 1
+  fi
+  confi() {
+    export FZF_DEFAULT_OPTS=""
+    export FZF_DEFAULT_OPTS="--height=40% \
+          --color fg:#ffffff,hl:#98c379,fg+:#ffffff,bg+:#222222,hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 \
+          --ansi --reverse --no-info --no-scrollbar \
+          --pointer=' '"
+  }
 
   confi
-  CONFIG="$HOME/.config/theader/theader.cfg"
-  PROP_DIR="$HOME/.config/theader/tpt"
-  TARGET="$HOME/.termux/termux.properties"
+  PREVIEW_SCRIPT=$(mktemp)
+  cat >"$PREVIEW_SCRIPT" <<EOF
+#!/usr/bin/env bash
+q="\$1"
+[ -z "\$q" ] && q="$current_title"
+tw=\$(tput cols)
+w=\$((tw + 17))
+if command -v lolcat >/dev/null 2>&1; then
+    figlet -f $FONT -t -w "\$w" "\$q" | lolcat -f
+else
+    figlet -f $FONT -t -w "\$w" "\$q"
+fi
+EOF
+  chmod +x "$PREVIEW_SCRIPT"
 
-  mkdir -p "$(dirname "$CONFIG")"
-  mkdir -p "$PROP_DIR"
-  touch "$CONFIG"
+  # ====== Run fzf for live title input ======
+  title_result=$(
+    printf "\n" | fzf \
+      --prompt="Type Title ▶ " \
+      --exit-0 \
+      --query="$current_title" \
+      --print-query \
+      --border \
+      --margin=1,5% \
+      --preview "$PREVIEW_SCRIPT {q}" \
+      --preview-window=down:70%:wrap \
+      --phony
+  )
 
-  # ====== Compute current active hash ======
-  if [[ -f "$TARGET" ]]; then
-    current_hash=$(sha256sum "$TARGET" | awk '{print $1}')
-  else
-    current_hash=""
+  # ====== Extract typed title ======
+  title=$(echo "$title_result" | head -n1)
+  if [[ -z "$title" ]]; then
+    echo "No title entered. Exiting."
+    exit 0
   fi
 
-  # ✅ Green nerd font check mark
-  green_star=$'\033[32m\033[0m'
-
-  # ====== Collect available configs ======
-  options=()
-  i=1
-  while IFS= read -r file; do
-    filename=$(basename "$file")
-    file_hash=$(sha256sum "$file" | awk '{print $1}')
-    if [[ "$file_hash" == "$current_hash" ]]; then
-      options+=("$i. $filename $green_star")
-    else
-      options+=("$i. $filename")
-    fi
-    ((i++))
-  done < <(find "$PROP_DIR" -maxdepth 1 -type f | sort)
-
-  # ====== Select with fzf ======
-  choice=$(printf "%s\n" "${options[@]}" |
-    fzf --prompt="Select termux.properties ➤ " --exit-0 \
-      --margin 1,5% --height=40% --border \
-      --ansi --no-info --reverse --no-scrollbar)
-
-  [[ -z "$choice" ]] && echo "No selection made. Exiting." && exit 0
-
-  # Strip number + star → just filename
-  choice_clean="${choice#*. }"
-  choice_clean="${choice_clean%% *}"
-
-  # ====== Update termux.properties ======
-  selected_file="$PROP_DIR/$choice_clean"
-  selected_hash=$(sha256sum "$selected_file" | awk '{print $1}')
-
-  cp "$selected_file" "$TARGET"
-
-  if grep -q '^termux_properties=' "$CONFIG"; then
-    sed -i "s|^termux_properties=.*|termux_properties=$selected_hash|" "$CONFIG"
+  # ====== Save to config ======
+  if grep -q '^title=' "$CONFIG"; then
+    sed -i "s|^title=.*|title=$title|" "$CONFIG"
   else
-    echo "termux_properties=$selected_hash" >>"$CONFIG"
+    echo "title=$title" >>"$CONFIG"
   fi
 
-  termux-reload-settings
-
-  echo -e "\033[32m[✔] Updated termux.properties → $choice_clean\033[0m"
+  echo -e "\033[32m[✔] Title saved: \"$title\" in $CONFIG\033[0m"
 }
 
 function c_logo() {
 
   confi
+  # =====================================================
+  #   FZF Logo + Indent Picker with Preview + Highlights
+  #   Works in Bash, Fish, Zsh, Termux
+  # =====================================================
+
+  # ====== Config & Logo Directory ======
   CONFIG="$HOME/.config/theader/theader.cfg"
-  LOGO_DIR="$HOME/.config/theader/logo"
-  mkdir -p "$(dirname "$CONFIG")"
-  touch "$CONFIG"
+  DIR="$HOME/.config/theader/logo"
+  # mkdir -p "$(dirname "$CONFIG")" "$DIR"
+  # touch "$CONFIG"
 
   # ====== Read current config ======
   current_logo=$(grep '^logo=' "$CONFIG" | cut -d'=' -f2)
   current_indent=$(grep '^indent=' "$CONFIG" | cut -d'=' -f2)
   [[ -z "$current_indent" ]] && current_indent=2
 
-  # ✅ Green nerd font check mark
+  # ✅ Green star symbol
   green_star=$'\033[32m\033[0m'
 
-  # ====== Logo Selection ======
+  # ====== Step 1: Logo Selection ======
+  mapfile -t files < <(find "$DIR" -maxdepth 1 -type f | sort)
+  if [ ${#files[@]} -eq 0 ]; then
+    echo "No logo files found in $DIR"
+    exit 0
+  fi
+
   options=()
-  i=1
-  while IFS= read -r file; do
-    filename=$(basename "$file")
-    if [[ "$filename" == "$current_logo" ]]; then
-      options+=("$i. $filename $green_star")
+  idx=1
+  for f in "${files[@]}"; do
+    name=$(basename "$f")
+    if [[ "$name" == "$current_logo" ]]; then
+      options+=("$idx. $name $green_star")
     else
-      options+=("$i. $filename")
+      options+=("$idx. $name")
     fi
-    ((i++))
-  done < <(find "$LOGO_DIR" -maxdepth 1 -type f | sort)
+    ((idx++))
+  done
 
-  choice=$(printf "%s\n" "${options[@]}" |
-    fzf --prompt="Select Logo ➤ " --exit-0 \
-      --margin 1,5% --height=20% --border \
-      --preview='FILE={}; FILE=${FILE#*. }; FILE=${FILE%% *}; cat "'"$LOGO_DIR"'/$FILE"' \
-      --preview-window=right:40%:wrap \
-      --ansi --no-info --reverse --no-scrollbar)
+  choice=$(
+    printf "%s\n" "${options[@]}" |
+      FZF_PREVIEW_DIR="$DIR" fzf \
+        --prompt="Select Logo ➤ " \
+        --exit-0 \
+        --height=40% \
+        --border --margin 1,5% \
+        --border \
+        --reverse \
+        --ansi \
+        --no-scrollbar \
+        --preview 'bash -c "
+            FILE=\$(echo {} | sed \"s/^[0-9]\+[.] //; s/ .*//\");
+            cat \"$FZF_PREVIEW_DIR/\$FILE\" 2>/dev/null || file \"$FZF_PREVIEW_DIR/\$FILE\"
+        "' \
+        --preview-window=right:40%:wrap
+  )
 
-  [[ -z "$choice" ]] && echo "No selection made. Exiting." && exit 0
+  if [[ -z "$choice" ]]; then
+    echo "No logo selected. Exiting."
+    exit 0
+  fi
 
-  # Strip off numbering + star
-  choice_clean="${choice#*. }"
-  choice_clean="${choice_clean%% *}"
+  choice_clean=$(echo "$choice" | sed 's/^[0-9]\+[.] //' | sed 's/ .*//')
 
-  # ====== Indent Selection (same style) ======
+  # ====== Step 2: Indent Selection ======
   indent_opts=(2 3 4 5 6)
   indent_choices=()
   for val in "${indent_opts[@]}"; do
@@ -165,14 +164,25 @@ function c_logo() {
     fi
   done
 
-  indent_choice=$(printf "%s\n" "${indent_choices[@]}" |
-    fzf --prompt="Select Indent ➤ " --exit-0 \
-      --margin 1,5% --height=20% --border \
-      --ansi --no-info --reverse --no-scrollbar)
+  indent_choice=$(
+    printf "%s\n" "${indent_choices[@]}" |
+      fzf \
+        --prompt="Select Indent ➤ " \
+        --exit-0 \
+        --height=30% \
+        --border \
+        --reverse \
+        --ansi \
+        --no-scrollbar
+  )
 
-  [[ -z "$indent_choice" ]] && indent_choice=$current_indent || indent_choice="${indent_choice%% *}"
+  if [[ -z "$indent_choice" ]]; then
+    indent_choice="$current_indent"
+  else
+    indent_choice=$(echo "$indent_choice" | awk '{print $1}')
+  fi
 
-  # ====== Update config ======
+  # ====== Step 3: Update Config File ======
   if grep -q '^logo=' "$CONFIG"; then
     sed -i "s|^logo=.*|logo=$choice_clean|" "$CONFIG"
   else
@@ -185,6 +195,7 @@ function c_logo() {
     echo "indent=$indent_choice" >>"$CONFIG"
   fi
 
+  # ====== Done ======
   echo -e "\033[32m[✔] Updated logo=$choice_clean, indent=$indent_choice\033[0m"
 }
 # ====== Change current theme from .zshrc ====== #
