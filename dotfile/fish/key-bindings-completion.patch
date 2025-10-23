@@ -1,0 +1,59 @@
+--- ../usr/share/fzf/key-bindings.fish	2025-10-15 23:25:23.000000000 +0530
++++ .config/fish/conf.d/fzf.fish	2025-10-20 13:21:16.903573532 +0530
+@@ -1,3 +1,4 @@
++### key-bindings.fish ###
+ #     ____      ____
+ #    / __/___  / __/
+ #   / /_/_  / / /_
+@@ -33,11 +34,15 @@
+   function __fzf_defaults
+     # $argv[1]: Prepend to FZF_DEFAULT_OPTS_FILE and FZF_DEFAULT_OPTS
+     # $argv[2..]: Append to FZF_DEFAULT_OPTS_FILE and FZF_DEFAULT_OPTS
+-    test -n "$FZF_TMUX_HEIGHT"; or set -l FZF_TMUX_HEIGHT 40%
++    test -n "$FZF_TMUX_HEIGHT"; or set -l FZF_TMUX_HEIGHT 15%
+     string join ' ' -- \
+-      "--height $FZF_TMUX_HEIGHT --min-height=20+ --bind=ctrl-z:ignore" $argv[1] \
++      "--height $FZF_TMUX_HEIGHT --min-height=10+ --bind=ctrl-z:ignore" $argv[1] \
+       (test -r "$FZF_DEFAULT_OPTS_FILE"; and string join -- ' ' <$FZF_DEFAULT_OPTS_FILE) \
+-      $FZF_DEFAULT_OPTS $argv[2..-1]
++      $FZF_DEFAULT_OPTS \
++          "--color fg:#ffffff,hl:#98c379,fg+:#ffffff,bg+:#222222,hl+:#98c379,prompt:#61afef,pointer:#e5c07b,marker:#56b6c2 \
++           --reverse --no-info --no-scrollbar \
++          --pointer=' '" \
++          $argv[2..-1]
+   end
+ 
+   function __fzfcmd
+@@ -139,7 +144,7 @@
+     set -l prefix $commandline[3]
+ 
+     set -lx FZF_DEFAULT_OPTS (__fzf_defaults \
+-      "--reverse --walker=file,dir,follow,hidden --scheme=path" \
++      "--prompt='Select file ➤ ' --border --reverse --walker=file,dir,follow,hidden --scheme=path" \
+       "$FZF_CTRL_T_OPTS --multi --print0")
+ 
+     set -lx FZF_DEFAULT_COMMAND "$FZF_CTRL_T_COMMAND"
+@@ -158,7 +163,7 @@
+     set -l -- fzf_query (string escape -- $command_line[$current_line])
+ 
+     set -lx FZF_DEFAULT_OPTS (__fzf_defaults '' \
+-      '--nth=2..,.. --scheme=history --multi --wrap-sign="\t↳ "' \
++      '--prompt="History ➤ " --border --nth=2..,.. --scheme=history --multi --wrap-sign="\t↳ "' \
+       '--bind=\'shift-delete:execute-silent(eval history delete --exact --case-sensitive -- (string escape -n -- {+} | string replace -r -a "^\d*\\\\\\t|(?<=\\\\\\n)\\\\\\t" ""))+reload(eval $FZF_DEFAULT_COMMAND)\'' \
+       "--bind=ctrl-r:toggle-sort,alt-r:toggle-raw --highlight-line $FZF_CTRL_R_OPTS" \
+       '--accept-nth=2.. --read0 --print0 --with-shell='(status fish-path)\\ -c)
+@@ -201,7 +206,7 @@
+     set -l prefix $commandline[3]
+ 
+     set -lx FZF_DEFAULT_OPTS (__fzf_defaults \
+-      "--reverse --walker=dir,follow,hidden --scheme=path" \
++      "--prompt='Select directory ➤ ' --border --reverse --walker=dir,follow,hidden --scheme=path" \
+       "$FZF_ALT_C_OPTS --no-multi --print0")
+ 
+     set -lx FZF_DEFAULT_OPTS_FILE
+@@ -234,3 +239,5 @@
+   end
+ 
+ end
++### end: key-bindings.fish ###
++fzf_key_bindings
