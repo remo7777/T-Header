@@ -1,0 +1,55 @@
+# =========[ Custom T-header(logo with figlet) Setup ]=========
+
+if command -v boxes >/dev/null 2>&1 &&
+  command -v figlet >/dev/null 2>&1 &&
+  command -v tput >/dev/null 2>&1; then
+
+  user="$(mktemp)"
+  banner() {
+    clear
+    # === Load config === #
+    CONFIG="$HOME/.config/theader/theader.cfg"
+    LOGO_DIR="$HOME/.config/theader/logo"
+
+    echo -e "\033[34m$(echo "" |
+      boxes -a c -s "$(echo "${COLUMNS:-80}x10")" \
+        -d ansi-heavy)\033[0m"
+
+    # === Load title from config (fallback: "tyro 2.0") === #
+    title=$(grep '^title=' "$CONFIG" | cut -d'=' -f2-)
+    [[ -z "$title" ]] && title="tyro 2.0"
+
+    tput cup 4 0
+    figlet -f pixelfont -c -t -p \
+      -w "$(echo "$((${COLUMNS:-80} + 17))")" \
+      "$title" | lolcat -f
+
+    logo_file=$(grep '^logo=' "$CONFIG" | cut -d'=' -f2)
+    indent_size=$(grep '^indent=' "$CONFIG" | cut -d'=' -f2)
+
+    [[ -z "$indent_size" ]] && indent_size=2
+
+    indent=$(printf '%*s' "$indent_size")
+
+    tput cup 1 0
+    [[ -n "$logo_file" && -f "$LOGO_DIR/$logo_file" ]] &&
+      sed "s/^/${indent}/" "$LOGO_DIR/$logo_file"
+
+    tput cup 1 0
+    tput setaf 4
+    for ((i = 1; i <= 8; i++)); do echo "┃"; done
+
+    tput cup 10 0
+    tput cnorm
+  }
+
+  # banner >> "${user}"
+  # cat "${user}"
+fi
+export USER=$(whoami)
+banner >>"${user}"
+cat "${user}"
+
+bind -x '"\eh":CMD=${READLINE_LINE%% *}; help "$CMD" 2>/dev/null || man "$CMD" 2>/dev/null || echo "No help found for $CMD"'
+[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
+
