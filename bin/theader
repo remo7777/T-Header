@@ -63,21 +63,44 @@ if command -v gum >/dev/null 2>&1; then
   ICON_PROP="󰒓"     # config/properties
   ICON_THEME="󰏘"    # theme/appearance
 
+  # Detect shell for cztheme availability
+  CURRENT_SHELL="$(basename "$SHELL")"
+  DISABLE_THEME=false
+  if [[ "$CURRENT_SHELL" =~ ^(bash|fish)$ ]]; then
+    DISABLE_THEME=true
+  fi
+
   # Header + separator
   gum style --foreground="$HEADER_COLOR" --align=center --border=none \
     "theader • choose a command"
   gum style --foreground="$SEPARATOR_COLOR" --border=none "$sep"
 
+  # Build menu dynamically
+  menu_items=(
+    "clogo    $ICON_LOGO — Change logo"
+    "ctitle   $ICON_TITLE — Type header/title"
+    "ctpro    $ICON_PROP — Change termux.properties"
+  )
+
+  if [[ $DISABLE_THEME == false ]]; then
+    menu_items+=("cztheme  $ICON_THEME — Change ZSH theme")
+  else
+    menu_items+=("cztheme   — Disabled (not ZSH shell)")
+  fi
+
   # Menu with icons
-  choice="$(gum choose \
-    "clogo  $ICON_LOGO   — Change logo" \
-    "ctitle $ICON_TITLE  — Type header/title" \
-    "ctpro  $ICON_PROP   — Change termux.properties" \
-    "cztheme $ICON_THEME — Change ZSH theme" \
-    --cursor="$CURSOR")"
+  choice="$(gum choose "${menu_items[@]}" --cursor="$CURSOR")"
 
   [[ -z "${choice:-}" ]] && exit 0
+
   choice_cmd="${choice%% *}"
+
+  # Prevent cztheme run if disabled
+  if [[ $DISABLE_THEME == true && $choice_cmd == "cztheme" ]]; then
+    gum style --foreground="#ff5555" "cztheme disabled for $CURRENT_SHELL shell."
+    exit 0
+  fi
+
   run_cmd "$choice_cmd"
 else
   echo "gum not installed. Usage: theader [clogo|ctitle|ctpro|cztheme]" >&2
