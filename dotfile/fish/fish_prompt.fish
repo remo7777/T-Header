@@ -8,29 +8,35 @@ function fish_prompt
         end
     end
 
-    set -l red (set_color red)
-    set -l blue (set_color blue)
-    set -l yellow (set_color yellow)
-    set -l green (set_color green)
-    set -l gray (set_color brblack)
-    set -l reset (set_color normal)
-    set -l bold (set_color --bold)
+    set -l ZWS_START "\001"
+    set -l ZWS_END "\002"
+
+    # Define colors by wrapping the set_color output with the markers.
+    set -l red $ZWS_START(set_color red)$ZWS_END
+    set -l blue $ZWS_START(set_color blue)$ZWS_END
+    set -l yellow $ZWS_START(set_color yellow)$ZWS_END
+    set -l green $ZWS_START(set_color green)$ZWS_END
+    set -l gray $ZWS_START(set_color brblack)$ZWS_END
+    set -l reset $ZWS_START(set_color normal)$ZWS_END
+    set -l bold $ZWS_START(set_color --bold)$ZWS_END
     
     set -l cwd (prompt_pwd)
-    set -l os "termux"
-
-    # Prompt parts built into a single string
-    set -l prompt_str ""
     
-    # First line (starts with a newline)
-    set prompt_str "$prompt_str\n$red┌─[$blue$bold$TNAME$yellow@$gray$os$red]─[$green$cwd$red]$reset"
+    # --- HYBRID PROMPT STRUCTURE ---
+    
+    # 1. First Line: Using stable ASCII characters (+- and -)
+    set -l prompt_line1 (string join "" "\n" $red "┏━[" $blue $bold $TNAME $yellow "@" $gray "termux" $red "]-[" $green $cwd $red "]" $reset)
 
-    # Second line
-    set prompt_str "$prompt_str$red\n└──╼ "
+    # 2. Second Line Prefix: Using stable ASCII prefix (\>)
+    set -l prompt_line2_prefix (string join "" "\n" "$red┗━" $red "━" $reset " ") 
 
-    # Third part (Symbols)
-    set prompt_str "$prompt_str$red$bold$blue$gray $reset"
+    # 3. Symbols: Keeping the essential Nerd Font icons ()
+    # This structure is the only part of the Nerd Font style that didn't break the prompt.
+    set -l prompt_symbols (string join "" $red $bold "" $blue "" $gray "" " " $reset)
 
-    # FIX: Use printf %b to interpret the \n character as a newline.
+    # Combine all parts
+    set -l prompt_str (string join "" $prompt_line1 $prompt_line2_prefix $prompt_symbols)
+
+    # FINAL FIX: Use printf "%b" to process all escapes correctly.
     printf "%b" $prompt_str
 end
