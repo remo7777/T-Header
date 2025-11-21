@@ -17,12 +17,13 @@ function fish_prompt
     set -l bold (set_color --bold)
     
     set -l cwd (prompt_pwd)
+    set -l os "termux"
 
     # Prompt parts built into a single string
     set -l prompt_str ""
     
     # First line (starts with a newline)
-    set prompt_str "$prompt_str\n$red┌─[$blue$bold$TNAME$yellow@$gray termux$red]─[$green$cwd$red]$reset"
+    set prompt_str "$prompt_str\n$red┌─[$blue$bold$TNAME$yellow@$gray$os$red]─[$green$cwd$red]$reset"
 
     # Second line
     set prompt_str "$prompt_str$red\n└──╼ "
