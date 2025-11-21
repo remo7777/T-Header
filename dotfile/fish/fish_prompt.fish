@@ -1,5 +1,4 @@
 function fish_prompt
-    # Load username from config
     set -l config_file ~/.config/theader/theader.cfg
     set -l TNAME (whoami)
     if test -f $config_file
@@ -9,21 +8,28 @@ function fish_prompt
         end
     end
 
-    # Colors
-    set -l cyan (set_color cyan)
-    set -l gray (set_color brblack)
     set -l red (set_color red)
     set -l blue (set_color blue)
     set -l yellow (set_color yellow)
     set -l green (set_color green)
+    set -l gray (set_color brblack)
     set -l reset (set_color normal)
     set -l bold (set_color --bold)
-
-    # Current directory
+    
     set -l cwd (prompt_pwd)
 
-    # Left prompt using printf for newline
-    printf "\n%s┌─[%s%s%s@%stermux%s]─[%s%s%s]\n%s└──╼ %s%s %s" \
-        $red $blue $bold$TNAME $yellow $bold$cyan $red $green $cwd $red \
-    $red $blue $gray $reset
+    # Prompt parts built into a single string
+    set -l prompt_str ""
+    
+    # First line (starts with a newline)
+    set prompt_str "$prompt_str\n$red┌─[$blue$bold$TNAME$yellow@$gray termux$red]─[$green$cwd$red]$reset"
+
+    # Second line
+    set prompt_str "$prompt_str$red\n└──╼ "
+
+    # Third part (Symbols)
+    set prompt_str "$prompt_str$red$bold$blue$gray $reset"
+
+    # FIX: Use printf %b to interpret the \n character as a newline.
+    printf "%b" $prompt_str
 end
