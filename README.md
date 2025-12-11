@@ -102,7 +102,9 @@ rm -rf ~/.config/theader ~/.oh-my-zsh ~/.zshrc ~/.profile ~/.aliases
 
 ---
 
-[T-header Wiki](https://github.com/remo7777/T-Header/wiki)
+## T-Header Wiki
+
+[![Wiki](https://img.shields.io/badge/wiki-home-green.svg)](https://github.com/remo7777/T-Header/wiki)
 
 ---
 
