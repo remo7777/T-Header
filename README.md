@@ -98,7 +98,7 @@ rm -rf ~/.config/theader ~/.oh-my-zsh ~/.zshrc ~/.profile ~/.aliases
 
 ## 📜 License
 
-MIT © [remo7777](https://github.com/remo7777)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
